@@ -7,6 +7,7 @@ import json
 from datetime import datetime
 import logging
 import requests
+import traceback
 
 # Настройка логирования
 logging.basicConfig(
@@ -67,92 +68,64 @@ async def send_to_api(data):
         }
 
 async def run_script(script_name, tx_hash=None):
-    """Запускает Python скрипт и отправляет результаты через WebSocket"""
-    logger.info(f"Starting script: {script_name} with tx_hash: {tx_hash}")
-    
-    await broadcast({
-        'type': 'script_start',
-        'script': script_name,
-        'timestamp': datetime.now().isoformat()
-    })
-    
+    """Запускает скрипт с переданным хэшем транзакции"""
     try:
-        # Если есть хэш транзакции, передаем его как аргумент
+        # Формируем команду для запуска скрипта
+        cmd = ['python3', '-Xfrozen_modules=off', script_name]
         if tx_hash:
-            logger.info(f"Running {script_name} with tx_hash: {tx_hash}")
-            process = await asyncio.create_subprocess_exec(
-                'python3', script_name, tx_hash,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE
-            )
-        else:
-            logger.info(f"Running {script_name} without arguments")
-            process = await asyncio.create_subprocess_exec(
-                'python3', script_name,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE
-            )
+            cmd.append(tx_hash)
+            
+        logger.info(f"Running command: {' '.join(cmd)}")
+            
+        # Запускаем процесс
+        process = await asyncio.create_subprocess_exec(
+            *cmd,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
+        )
         
         # Читаем stdout и stderr в реальном времени
         while True:
-            stdout_data = await process.stdout.readline()
-            stderr_data = await process.stderr.readline()
+            stdout_data = await process.stdout.read(1024)
+            stderr_data = await process.stderr.read(1024)
             
-            if stdout_data:
-                logger.debug(f"STDOUT from {script_name}: {stdout_data.decode().strip()}")
-                await broadcast({
-                    'type': 'stdout',
-                    'script': script_name,
-                    'data': stdout_data.decode().strip(),
-                    'timestamp': datetime.now().isoformat()
-                })
-            
-            if stderr_data:
-                logger.error(f"STDERR from {script_name}: {stderr_data.decode().strip()}")
-                await broadcast({
-                    'type': 'stderr',
-                    'script': script_name,
-                    'data': stderr_data.decode().strip(),
-                    'timestamp': datetime.now().isoformat()
-                })
-            
-            # Проверяем, завершился ли процесс
-            if process.stdout.at_eof() and process.stderr.at_eof():
+            if not stdout_data and not stderr_data:
                 break
+                
+            if stdout_data:
+                message = stdout_data.decode().strip()
+                if message:
+                    logger.info(f"STDOUT from {script_name}: {message}")
+                    await broadcast({
+                        'type': 'stdout',
+                        'script': script_name,
+                        'data': message,
+                        'timestamp': datetime.now().isoformat()
+                    })
+                    
+            if stderr_data:
+                message = stderr_data.decode().strip()
+                if message:
+                    logger.error(f"STDERR from {script_name}: {message}")
+                    await broadcast({
+                        'type': 'stderr',
+                        'script': script_name,
+                        'data': message,
+                        'timestamp': datetime.now().isoformat()
+                    })
         
         # Ждем завершения процесса
-        return_code = await process.wait()
-        logger.info(f"Script {script_name} finished with return code: {return_code}")
+        await process.wait()
         
-        if return_code == 0:
-            logger.info(f"Script {script_name} completed successfully")
-            await broadcast({
-                'type': 'script_complete',
-                'script': script_name,
-                'status': 'success',
-                'timestamp': datetime.now().isoformat()
-            })
-            return True
-        else:
-            logger.error(f"Script {script_name} failed with return code: {return_code}")
-            await broadcast({
-                'type': 'script_error',
-                'script': script_name,
-                'status': 'error',
-                'return_code': return_code,
-                'timestamp': datetime.now().isoformat()
-            })
+        if process.returncode != 0:
+            logger.error(f"Script {script_name} failed with return code {process.returncode}")
             return False
             
+        return True
+        
     except Exception as e:
         logger.error(f"Error running script {script_name}: {str(e)}")
-        await broadcast({
-            'type': 'script_error',
-            'script': script_name,
-            'status': 'error',
-            'error': str(e),
-            'timestamp': datetime.now().isoformat()
-        })
+        logger.error(traceback.format_exc())
         return False
 
 async def process_scripts(tx_hash):
@@ -168,11 +141,24 @@ async def process_scripts(tx_hash):
     
     if not await run_script('process_traces.py', tx_hash):
         return
-    
+        
     # Add delay between stages
     await asyncio.sleep(2)
     
-    # Stage 2: Fetching contract metadata
+    # Stage 2: Cleaning trace
+    await broadcast({
+        'type': 'stage',
+        'stage': 'Cleaning trace',
+        'timestamp': datetime.now().isoformat()
+    })
+    
+    if not await run_script('clean_trace.py', tx_hash):
+        return
+        
+    # Add delay between stages
+    await asyncio.sleep(2)
+    
+    # Stage 3: Fetching contract metadata
     await broadcast({
         'type': 'stage',
         'stage': 'Fetching contract metadata',
@@ -207,24 +193,25 @@ async def process_scripts(tx_hash):
                     'context_code': item.get('context_code', '')[:512] if len(item.get('context_code', '')) < 512 else ''
                 } for item in source_map_list
             }
-            
-            # Update trace with source code
-            revert_index = None
-            for i, op in enumerate(trace):
-                if op['op'] == 'REVERT':
-                    revert_index = i
-                    break
-                    
-            if revert_index is not None:
-                # Update only 10 operations before and after revert
-                start = max(0, revert_index - 10)
-                end = min(len(trace), revert_index + 10)
-                for i in range(start, end):
-                    op = trace[i]
-                    pc = op.get('pc')
-                    if pc is not None and pc in source_map:
-                        op['source_code'] = source_map[pc]['code']
-                        op['context_code'] = source_map[pc]['context_code']
+
+            source_code_filled = {}
+            current_source_code = {}
+
+            for idx in range(max(source_map.keys())):
+                if idx in source_map.keys():
+                    source_code_filled[idx] = source_map[idx]
+                    current_source_code = source_map[idx]
+                else:
+                    source_code_filled[idx] = current_source_code
+
+            for idx, op in enumerate(trace):
+                pc = op['pc']
+                if pc in source_code_filled.keys():
+                    trace[idx]['code'] = source_code_filled[pc]['code']
+                    trace[idx]['context_code'] = source_code_filled[pc]['context_code']
+                else:
+                    trace[idx]['code'] = ''
+                    trace[idx]['context_code'] = ''
             
             # Save updated trace
             with open('cleaned_trace.json', 'w') as f:
@@ -234,20 +221,17 @@ async def process_scripts(tx_hash):
     except Exception as e:
         logger.error(f"Error collecting source map: {e}")
     
-    if not await run_script('clean_trace.py', tx_hash):
-        return
-    
     # Add delay between stages
     await asyncio.sleep(2)
     
-    # Stage 3: Analyzing transaction with AI
+    # Stage 4: Analyzing transaction with AI
     await broadcast({
         'type': 'stage',
         'stage': 'Analyzing transaction with AI',
         'timestamp': datetime.now().isoformat()
     })
     
-    if not await run_script('analyze_revert.py'):
+    if not await run_script('analyze_revert.py', tx_hash):
         return
     
     try:
@@ -364,6 +348,160 @@ Note: This analysis shows the execution path up to the first REVERT operation.
             'timestamp': datetime.now().isoformat()
         })
 
+async def process_emulation(params):
+    """Обрабатывает эмуляцию транзакции"""
+    logger.info(f"Starting emulation processing with params: {params}")
+    
+    # Stage 1: Emulating transaction
+    await broadcast({
+        'type': 'stage',
+        'stage': 'Emulating transaction',
+        'timestamp': datetime.now().isoformat()
+    })
+    
+    # Запускаем скрипт эмуляции
+    if not await run_script('emulate_trace.py', json.dumps(params)):
+        return
+        
+    # Add delay between stages
+    await asyncio.sleep(2)
+    
+    # Stage 2: Cleaning trace
+    await broadcast({
+        'type': 'stage',
+        'stage': 'Cleaning trace',
+        'timestamp': datetime.now().isoformat()
+    })
+    
+    if not await run_script('clean_trace.py', 'emulate'):
+        return
+        
+    # Add delay between stages
+    await asyncio.sleep(2)
+    
+    # Stage 3: Fetching contract metadata
+    await broadcast({
+        'type': 'stage',
+        'stage': 'Fetching contract metadata',
+        'timestamp': datetime.now().isoformat()
+    })
+    
+    # Get contract address from cleaned_trace.json
+    try:
+        with open('cleaned_trace.json', 'r') as f:
+            trace = json.load(f)
+            
+        # Find first CALL to get contract address
+        contract_address = None
+        for op in trace:
+            if op['op'] in ['CALL', 'DELEGATECALL', 'STATICCALL']:
+                contract_address = op['args']['to']
+                break
+                
+        if contract_address:
+            # Get source map for the contract
+            response = requests.post(
+                'http://205.196.81.76:5000/verify',
+                headers={'Content-Type': 'application/json'},
+                json={'address': contract_address},
+                timeout=5
+            )
+            response.raise_for_status()
+            source_map_list = response.json().get('jsonSourceMap', [])
+            source_map = {
+                item['pc']: {
+                    'code': item.get('code', '')[:256] if len(item.get('code', '')) < 256 else '',
+                    'context_code': item.get('context_code', '')[:512] if len(item.get('context_code', '')) < 512 else ''
+                } for item in source_map_list
+            }
+
+            source_code_filled = {}
+            current_source_code = {}
+
+            for idx in range(max(source_map.keys())):
+                if idx in source_map.keys():
+                    source_code_filled[idx] = source_map[idx]
+                    current_source_code = source_map[idx]
+                else:
+                    source_code_filled[idx] = current_source_code
+
+            for idx, op in enumerate(trace):
+                pc = op['pc']
+                if pc in source_code_filled.keys():
+                    trace[idx]['code'] = source_code_filled[pc]['code']
+                    trace[idx]['context_code'] = source_code_filled[pc]['context_code']
+                else:
+                    trace[idx]['code'] = ''
+                    trace[idx]['context_code'] = ''
+            
+            # Save updated trace
+            with open('cleaned_trace.json', 'w') as f:
+                json.dump(trace, f, indent=2)
+                
+            logger.info(f"Source map collected and trace updated for contract: {contract_address}")
+    except Exception as e:
+        logger.error(f"Error collecting source map: {e}")
+    
+    # Add delay between stages
+    await asyncio.sleep(2)
+    
+    # Stage 4: Analyzing transaction with AI
+    await broadcast({
+        'type': 'stage',
+        'stage': 'Analyzing transaction with AI',
+        'timestamp': datetime.now().isoformat()
+    })
+    
+    if not await run_script('analyze_revert.py', 'emulate'):
+        return
+    
+    try:
+        # Read results from files
+        with open('cleaned_trace.json', 'r') as f:
+            cleaned_trace = json.load(f)
+        with open('revert_analysis.txt', 'r') as f:
+            analysis = f.read()
+        
+        # Format the analysis report
+        report = f"""Transaction Emulation Report
+=====================
+
+Emulation Parameters:
+-------------------
+From: {params['from']}
+To: {params['to']}
+Data: {params['data']}
+Value: {params.get('value', '0')}
+
+Analysis Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+Trace Analysis:
+--------------
+{analysis}
+
+Trace Statistics:
+----------------
+Total Operations: {len(cleaned_trace)}
+Cleaned Operations: {len(cleaned_trace)}
+
+Note: This analysis shows the execution path up to the first REVERT operation.
+"""
+        
+        # Send results through WebSocket
+        await broadcast({
+            'type': 'complete',
+            'message': 'Emulation completed',
+            'data': report
+        })
+            
+    except Exception as e:
+        logger.error(f"Error processing results: {e}")
+        await broadcast({
+            'type': 'error',
+            'message': f'Error processing results: {str(e)}',
+            'timestamp': datetime.now().isoformat()
+        })
+
 async def handler(websocket):
     """WebSocket connection handler"""
     logger.info("New WebSocket connection established")
@@ -397,6 +535,31 @@ async def handler(websocket):
                         logger.info("Script processing completed")
                     except Exception as e:
                         logger.error(f"Error in process_scripts: {str(e)}", exc_info=True)
+                elif data.get('action') == 'emulate':
+                    logger.info("Emulate action detected")
+                    params = {
+                        'from': data.get('from'),
+                        'to': data.get('to'),
+                        'data': data.get('data'),
+                        'value': data.get('value')
+                    }
+                    
+                    # Проверяем обязательные параметры
+                    if not all([params['from'], params['to'], params['data']]):
+                        logger.error("Missing required parameters for emulation")
+                        await broadcast({
+                            'type': 'error',
+                            'message': 'Missing required parameters for emulation',
+                            'timestamp': datetime.now().isoformat()
+                        })
+                        continue
+                    
+                    logger.info("Starting emulation processing...")
+                    try:
+                        await process_emulation(params)
+                        logger.info("Emulation processing completed")
+                    except Exception as e:
+                        logger.error(f"Error in process_emulation: {str(e)}", exc_info=True)
                 else:
                     logger.warning(f"Unknown action received: {data.get('action')}")
             except json.JSONDecodeError as e:

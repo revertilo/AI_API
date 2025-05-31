@@ -189,15 +189,25 @@ def main():
         print("\n=== Starting Analysis ===")
         sys.stdout.flush()
         
-        # Получаем хэш транзакции из аргументов командной строки
+        # Получаем параметры из аргументов командной строки
         if len(sys.argv) != 2:
-            print("Usage: python3 analyze_revert.py <tx_hash>")
+            print("Usage: python3 analyze_revert.py <tx_hash or params_json>")
             sys.stdout.flush()
             sys.exit(1)
             
-        tx_hash = sys.argv[1]
-        print(f"\nAnalyzing transaction: {tx_hash}")
+        input_data = sys.argv[1]
+        print(f"\nAnalyzing input: {input_data}")
         sys.stdout.flush()
+        
+        # Определяем, это хэш транзакции или параметры эмуляции
+        if input_data == 'emulate':  # Специальный случай для эмуляции
+            tx_hash = "emulation"
+            print("Processing emulation")
+            sys.stdout.flush()
+        elif input_data.startswith('0x') and len(input_data) == 66:  # Это хэш транзакции
+            tx_hash = input_data
+            print(f"Processing real transaction: {tx_hash}")
+            sys.stdout.flush()
         
         # Получаем информацию о реверте
         print("\nGetting revert info...")

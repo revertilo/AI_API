@@ -1,0 +1,3641 @@
+You are an AI assistant specialized in analyzing Ethereum transaction traces and debugging smart contract issues. Your task is to analyze the transaction trace and provide insights about what went wrong.
+
+Transaction Hash: emulation
+Contract Address: 0x4d4574f50dd8b9dbe623cf329dcc78d76935e610
+Function Signature: 0x23b872dd
+
+The trace data is provided in cleaned_trace.json and contains the following information:
+1. Operation codes (opcodes) executed during the transaction
+2. Arguments for each operation
+3. Gas usage and costs
+4. Memory and stack state
+5. Call data and return values
+
+Source Code Context:
+```solidity
+
+```
+
+Your analysis should include:
+1. Identify the sequence of operations that led to the REVERT
+2. Explain what each operation does and how it contributed to the failure
+3. If there's a revert message, decode and explain it
+4. Suggest potential fixes or improvements
+
+Please format your response in a clear, structured way:
+1. Summary of the issue
+2. Detailed analysis of the trace
+3. Root cause
+4. Recommendations
+
+Focus on being precise and technical, but also explain concepts in a way that's understandable to developers with basic Ethereum knowledge.
+
+Trace Data:
+[
+  {
+    "op": "CALL",
+    "args": {
+      "gas": "0x8f05a32",
+      "to": "0x4d4574f50dd8b9dbe623cf329dcc78d76935e610",
+      "value": "0x0",
+      "in_offset": "0x80",
+      "in_size": "0x64",
+      "ret_offset": "0x0",
+      "ret_size": "0x20",
+      "input_data": "0x23b872dd0000000000000000000000004ac3dc4f8986d77d3d589daa074f040b701d752a0000000000000000000000005141b82f5ffda4c6fe1e372978f1c5427640a19000000000000000000000000000000000000000000000000000c6cec41267a9be"
+    },
+    "pc": 11106,
+    "depth": 1,
+    "result": "",
+    "gas": 149969458,
+    "gasCost": 147626226,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "CALLDATASIZE",
+    "args": {},
+    "pc": 7,
+    "depth": 2,
+    "result": "",
+    "gas": 147623605,
+    "gasCost": 2,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "LT",
+    "args": {
+      "a": "0x64",
+      "b": "0x4"
+    },
+    "pc": 8,
+    "depth": 2,
+    "result": false,
+    "gas": 147623603,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x13f",
+      "condition": "0x0"
+    },
+    "pc": 12,
+    "depth": 2,
+    "result": "",
+    "gas": 147623597,
+    "gasCost": 10,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "CALLDATALOAD",
+    "args": {
+      "offset": "0x0"
+    },
+    "pc": 14,
+    "depth": 2,
+    "result": "",
+    "gas": 147623585,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "GT",
+    "args": {
+      "a": "0x8a8c523c",
+      "b": "0x23b872dd"
+    },
+    "pc": 24,
+    "depth": 2,
+    "result": true,
+    "gas": 147623570,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0xb3",
+      "condition": "0x1"
+    },
+    "pc": 28,
+    "depth": 2,
+    "result": "",
+    "gas": 147623564,
+    "gasCost": 10,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "GT",
+    "args": {
+      "a": "0x313ce567",
+      "b": "0x23b872dd"
+    },
+    "pc": 186,
+    "depth": 2,
+    "result": true,
+    "gas": 147623547,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x104",
+      "condition": "0x1"
+    },
+    "pc": 190,
+    "depth": 2,
+    "result": "",
+    "gas": 147623541,
+    "gasCost": 10,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x6fdde03",
+      "b": "0x23b872dd"
+    },
+    "pc": 267,
+    "depth": 2,
+    "result": false,
+    "gas": 147623524,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x14a",
+      "condition": "0x0"
+    },
+    "pc": 271,
+    "depth": 2,
+    "result": "",
+    "gas": 147623518,
+    "gasCost": 10,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x95ea7b3",
+      "b": "0x23b872dd"
+    },
+    "pc": 278,
+    "depth": 2,
+    "result": false,
+    "gas": 147623502,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x188",
+      "condition": "0x0"
+    },
+    "pc": 282,
+    "depth": 2,
+    "result": "",
+    "gas": 147623496,
+    "gasCost": 10,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0xfaee56f",
+      "b": "0x23b872dd"
+    },
+    "pc": 289,
+    "depth": 2,
+    "result": false,
+    "gas": 147623480,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x1b7",
+      "condition": "0x0"
+    },
+    "pc": 293,
+    "depth": 2,
+    "result": "",
+    "gas": 147623474,
+    "gasCost": 10,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x18160ddd",
+      "b": "0x23b872dd"
+    },
+    "pc": 300,
+    "depth": 2,
+    "result": false,
+    "gas": 147623458,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x1da",
+      "condition": "0x0"
+    },
+    "pc": 304,
+    "depth": 2,
+    "result": "",
+    "gas": 147623452,
+    "gasCost": 10,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x23b872dd",
+      "b": "0x23b872dd"
+    },
+    "pc": 311,
+    "depth": 2,
+    "result": true,
+    "gas": 147623436,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x1ee",
+      "condition": "0x1"
+    },
+    "pc": 315,
+    "depth": 2,
+    "result": "",
+    "gas": 147623430,
+    "gasCost": 10,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 497,
+    "depth": 2,
+    "result": true,
+    "gas": 147623414,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x1f9",
+      "condition": "0x1"
+    },
+    "pc": 501,
+    "depth": 2,
+    "result": "",
+    "gas": 147623408,
+    "gasCost": 10,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "CALLDATASIZE",
+    "args": {},
+    "pc": 513,
+    "depth": 2,
+    "result": "",
+    "gas": 147623389,
+    "gasCost": 2,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1743"
+    },
+    "pc": 519,
+    "depth": 2,
+    "result": "",
+    "gas": 147623381,
+    "gasCost": 8,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x64",
+      "b": "0x4"
+    },
+    "pc": 5963,
+    "depth": 2,
+    "result": "",
+    "gas": 147623356,
+    "gasCost": 3,
+    "code": "sub(dataEnd, headStart)",
+    "context_code": "        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_decode_tuple_t_addresst_addresst_uint256(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 96) { revert(0, 0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)"
+  },
+  {
+    "op": "SLT",
+    "args": {
+      "a": "0x60",
+      "b": "0x60"
+    },
+    "pc": 5964,
+    "depth": 2,
+    "result": "",
+    "gas": 147623353,
+    "gasCost": 3,
+    "code": "slt(sub(dataEnd, headStart), 96)",
+    "context_code": "        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_decode_tuple_t_addresst_addresst_uint256(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 96) { revert(0, 0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 5965,
+    "depth": 2,
+    "result": true,
+    "gas": 147623350,
+    "gasCost": 3,
+    "code": "if slt(sub(dataEnd, headStart), 96) { revert(0, 0) }",
+    "context_code": "        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_decode_tuple_t_addresst_addresst_uint256(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 96) { revert(0, 0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x1755",
+      "condition": "0x1"
+    },
+    "pc": 5969,
+    "depth": 2,
+    "result": "",
+    "gas": 147623344,
+    "gasCost": 10,
+    "code": "if slt(sub(dataEnd, headStart), 96) { revert(0, 0) }",
+    "context_code": "        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_decode_tuple_t_addresst_addresst_uint256(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 96) { revert(0, 0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)"
+  },
+  {
+    "op": "CALLDATALOAD",
+    "args": {
+      "offset": "0x4"
+    },
+    "pc": 5975,
+    "depth": 2,
+    "result": "",
+    "gas": 147623330,
+    "gasCost": 3,
+    "code": "calldataload(headStart)",
+    "context_code": "        mstore(headStart, value0)\n    }\n    function abi_decode_tuple_t_addresst_addresst_uint256(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 96) { revert(0, 0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)\n        value1 := value_1"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1705"
+    },
+    "pc": 5983,
+    "depth": 2,
+    "result": "",
+    "gas": 147623318,
+    "gasCost": 8,
+    "code": "validator_revert_address(value)",
+    "context_code": "    }\n    function abi_decode_tuple_t_addresst_addresst_uint256(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 96) { revert(0, 0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)\n        value1 := value_1\n        value2 := calldataload(add(headStart, 64))"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 5901,
+    "depth": 2,
+    "result": "",
+    "gas": 147623297,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x4ac3dc4f8986d77d3d589daa074f040b701d752a",
+      "b": "0x4ac3dc4f8986d77d3d589daa074f040b701d752a"
+    },
+    "pc": 5905,
+    "depth": 2,
+    "result": true,
+    "gas": 147623285,
+    "gasCost": 3,
+    "code": "eq(value, and(value, sub(shl(160, 1), 1)))",
+    "context_code": "        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }\n    function abi_decode_tuple_t_addresst_uint256(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n        let value := calldataload(headStart)"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x511",
+      "condition": "0x1"
+    },
+    "pc": 5909,
+    "depth": 2,
+    "result": "",
+    "gas": 147623279,
+    "gasCost": 10,
+    "code": "if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }",
+    "context_code": "        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }\n    function abi_decode_tuple_t_addresst_uint256(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n        let value := calldataload(headStart)"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1760"
+    },
+    "pc": 1299,
+    "depth": 2,
+    "result": "",
+    "gas": 147623266,
+    "gasCost": 8,
+    "code": "function emergencyWithdrawTokens() external {\n        require(_msgSender() == _devWallet);\n        uint256 amount = balanceOf(address(this));\n        _transfer(address(this), _devWallet, amount);\n    }",
+    "context_code": ""
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x4",
+      "b": "0x20"
+    },
+    "pc": 5990,
+    "depth": 2,
+    "result": "",
+    "gas": 147623246,
+    "gasCost": 3,
+    "code": "add(headStart, 32)",
+    "context_code": "    {\n        if slt(sub(dataEnd, headStart), 96) { revert(0, 0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)\n        value1 := value_1\n        value2 := calldataload(add(headStart, 64))\n    }\n    function abi_encode_tuple_t_uint8__to_t_uint8__fromStack_reversed(headStart, value0) -> tail"
+  },
+  {
+    "op": "CALLDATALOAD",
+    "args": {
+      "offset": "0x24"
+    },
+    "pc": 5991,
+    "depth": 2,
+    "result": "",
+    "gas": 147623243,
+    "gasCost": 3,
+    "code": "calldataload(add(headStart, 32))",
+    "context_code": "    {\n        if slt(sub(dataEnd, headStart), 96) { revert(0, 0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)\n        value1 := value_1\n        value2 := calldataload(add(headStart, 64))\n    }\n    function abi_encode_tuple_t_uint8__to_t_uint8__fromStack_reversed(headStart, value0) -> tail"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1705"
+    },
+    "pc": 5999,
+    "depth": 2,
+    "result": "",
+    "gas": 147623231,
+    "gasCost": 8,
+    "code": "validator_revert_address(value_1)",
+    "context_code": "        if slt(sub(dataEnd, headStart), 96) { revert(0, 0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)\n        value1 := value_1\n        value2 := calldataload(add(headStart, 64))\n    }\n    function abi_encode_tuple_t_uint8__to_t_uint8__fromStack_reversed(headStart, value0) -> tail\n    {"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 5901,
+    "depth": 2,
+    "result": "",
+    "gas": 147623210,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x5141b82f5ffda4c6fe1e372978f1c5427640a190",
+      "b": "0x5141b82f5ffda4c6fe1e372978f1c5427640a190"
+    },
+    "pc": 5905,
+    "depth": 2,
+    "result": true,
+    "gas": 147623198,
+    "gasCost": 3,
+    "code": "eq(value, and(value, sub(shl(160, 1), 1)))",
+    "context_code": "        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }\n    function abi_decode_tuple_t_addresst_uint256(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n        let value := calldataload(headStart)"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x511",
+      "condition": "0x1"
+    },
+    "pc": 5909,
+    "depth": 2,
+    "result": "",
+    "gas": 147623192,
+    "gasCost": 10,
+    "code": "if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }",
+    "context_code": "        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }\n    function abi_decode_tuple_t_addresst_uint256(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n        let value := calldataload(headStart)"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1770"
+    },
+    "pc": 1299,
+    "depth": 2,
+    "result": "",
+    "gas": 147623179,
+    "gasCost": 8,
+    "code": "function emergencyWithdrawTokens() external {\n        require(_msgSender() == _devWallet);\n        uint256 amount = balanceOf(address(this));\n        _transfer(address(this), _devWallet, amount);\n    }",
+    "context_code": ""
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x40",
+      "b": "0x4"
+    },
+    "pc": 6013,
+    "depth": 2,
+    "result": "",
+    "gas": 147623140,
+    "gasCost": 3,
+    "code": "add(headStart, 64)",
+    "context_code": "        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)\n        value1 := value_1\n        value2 := calldataload(add(headStart, 64))\n    }\n    function abi_encode_tuple_t_uint8__to_t_uint8__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, 0xff))"
+  },
+  {
+    "op": "CALLDATALOAD",
+    "args": {
+      "offset": "0x44"
+    },
+    "pc": 6014,
+    "depth": 2,
+    "result": "",
+    "gas": 147623137,
+    "gasCost": 3,
+    "code": "calldataload(add(headStart, 64))",
+    "context_code": "        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)\n        value1 := value_1\n        value2 := calldataload(add(headStart, 64))\n    }\n    function abi_encode_tuple_t_uint8__to_t_uint8__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, 0xff))"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x208"
+    },
+    "pc": 6016,
+    "depth": 2,
+    "result": "",
+    "gas": 147623131,
+    "gasCost": 8,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x45a"
+    },
+    "pc": 524,
+    "depth": 2,
+    "result": "",
+    "gas": 147623119,
+    "gasCost": 8,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0xd82"
+    },
+    "pc": 1125,
+    "depth": 2,
+    "result": "",
+    "gas": 147623093,
+    "gasCost": 8,
+    "code": "_transfer(sender, recipient, amount)",
+    "context_code": "        _approve(_msgSender(), spender, amount);\n        return true;\n    }\n\n    function transferFrom(address sender, address recipient, uint256 amount) public override returns (bool) {\n        _transfer(sender, recipient, amount);\n        _approve(sender, _msgSender(), _allowances[sender][_msgSender()].sub(amount, \"ERC20: transfer amount exceeds allowance\"));\n        return true;\n    }\n\n    function _approve(address owner, address spender, uint256 amount) private {"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 3466,
+    "depth": 2,
+    "result": "",
+    "gas": 147623072,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0xde6",
+      "condition": "0x4ac3dc4f8986d77d3d589daa074f040b701d752a"
+    },
+    "pc": 3472,
+    "depth": 2,
+    "result": "",
+    "gas": 147623060,
+    "gasCost": 10,
+    "code": "require(from != address(0), \"ERC20: transfer from the zero address\")",
+    "context_code": ""
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 3566,
+    "depth": 2,
+    "result": "",
+    "gas": 147623037,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0xe48",
+      "condition": "0x5141b82f5ffda4c6fe1e372978f1c5427640a190"
+    },
+    "pc": 3572,
+    "depth": 2,
+    "result": "",
+    "gas": 147623025,
+    "gasCost": 10,
+    "code": "require(to != address(0), \"ERC20: transfer to the zero address\")",
+    "context_code": ""
+  },
+  {
+    "op": "GT",
+    "args": {
+      "a": "0xc6cec41267a9be",
+      "b": "0x0"
+    },
+    "pc": 3659,
+    "depth": 2,
+    "result": true,
+    "gas": 147623009,
+    "gasCost": 3,
+    "code": "amount > 0",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0xea9",
+      "condition": "0x1"
+    },
+    "pc": 3663,
+    "depth": 2,
+    "result": "",
+    "gas": 147623003,
+    "gasCost": 10,
+    "code": "require(amount > 0, \"Transfer amount must be greater than zero\")",
+    "context_code": ""
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0x0"
+    },
+    "pc": 3756,
+    "depth": 2,
+    "result": "",
+    "gas": 147622987,
+    "gasCost": 2100,
+    "code": "_owner",
+    "context_code": "        _owner = msgSender;\n        emit OwnershipTransferred(address(0), msgSender);\n    }\n\n    function owner() public view returns (address) {\n        return _owner;\n    }\n\n    modifier onlyOwner() {\n        require(_owner == _msgSender(), \"Ownable: caller is not the owner\");\n        _;"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 3764,
+    "depth": 2,
+    "result": "",
+    "gas": 147620875,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x0",
+      "b": "0x4ac3dc4f8986d77d3d589daa074f040b701d752a"
+    },
+    "pc": 3770,
+    "depth": 2,
+    "result": false,
+    "gas": 147620857,
+    "gasCost": 3,
+    "code": "from != owner()",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 3772,
+    "depth": 2,
+    "result": true,
+    "gas": 147620851,
+    "gasCost": 3,
+    "code": "from != owner()",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0xed4",
+      "condition": "0x0"
+    },
+    "pc": 3777,
+    "depth": 2,
+    "result": "",
+    "gas": 147620842,
+    "gasCost": 10,
+    "code": "from != owner() && to != owner()",
+    "context_code": ""
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0x0"
+    },
+    "pc": 3780,
+    "depth": 2,
+    "result": "",
+    "gas": 147620828,
+    "gasCost": 100,
+    "code": "_owner",
+    "context_code": "        _owner = msgSender;\n        emit OwnershipTransferred(address(0), msgSender);\n    }\n\n    function owner() public view returns (address) {\n        return _owner;\n    }\n\n    modifier onlyOwner() {\n        require(_owner == _msgSender(), \"Ownable: caller is not the owner\");\n        _;"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 3788,
+    "depth": 2,
+    "result": "",
+    "gas": 147620716,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x0",
+      "b": "0x5141b82f5ffda4c6fe1e372978f1c5427640a190"
+    },
+    "pc": 3794,
+    "depth": 2,
+    "result": false,
+    "gas": 147620698,
+    "gasCost": 3,
+    "code": "to != owner()",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 3795,
+    "depth": 2,
+    "result": true,
+    "gas": 147620695,
+    "gasCost": 3,
+    "code": "to != owner()",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x1"
+    },
+    "pc": 3798,
+    "depth": 2,
+    "result": false,
+    "gas": 147620688,
+    "gasCost": 3,
+    "code": "from != owner() && to != owner()  && from != _devWallet",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0xef3",
+      "condition": "0x0"
+    },
+    "pc": 3802,
+    "depth": 2,
+    "result": "",
+    "gas": 147620682,
+    "gasCost": 10,
+    "code": "from != owner() && to != owner()  && from != _devWallet",
+    "context_code": ""
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0x4"
+    },
+    "pc": 3806,
+    "depth": 2,
+    "result": "",
+    "gas": 147620667,
+    "gasCost": 2100,
+    "code": "_devWallet",
+    "context_code": ""
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 3814,
+    "depth": 2,
+    "result": "",
+    "gas": 147618555,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "DIV",
+    "args": {
+      "a": "0x30fc4f8338f9637dbec98e217bba783529d7a29500",
+      "b": "0x100"
+    },
+    "pc": 3823,
+    "depth": 2,
+    "result": "",
+    "gas": 147618534,
+    "gasCost": 5,
+    "code": "_devWallet",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x30fc4f8338f9637dbec98e217bba783529d7a295",
+      "b": "0x4ac3dc4f8986d77d3d589daa074f040b701d752a"
+    },
+    "pc": 3825,
+    "depth": 2,
+    "result": false,
+    "gas": 147618526,
+    "gasCost": 3,
+    "code": "from != _devWallet",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 3826,
+    "depth": 2,
+    "result": true,
+    "gas": 147618523,
+    "gasCost": 3,
+    "code": "from != _devWallet",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x1"
+    },
+    "pc": 3829,
+    "depth": 2,
+    "result": false,
+    "gas": 147618516,
+    "gasCost": 3,
+    "code": "from != owner() && to != owner()  && from != _devWallet && to != _devWallet",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0xf12",
+      "condition": "0x0"
+    },
+    "pc": 3833,
+    "depth": 2,
+    "result": "",
+    "gas": 147618510,
+    "gasCost": 10,
+    "code": "from != owner() && to != owner()  && from != _devWallet && to != _devWallet",
+    "context_code": ""
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0x4"
+    },
+    "pc": 3837,
+    "depth": 2,
+    "result": "",
+    "gas": 147618495,
+    "gasCost": 100,
+    "code": "_devWallet",
+    "context_code": ""
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 3845,
+    "depth": 2,
+    "result": "",
+    "gas": 147618383,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "DIV",
+    "args": {
+      "a": "0x30fc4f8338f9637dbec98e217bba783529d7a29500",
+      "b": "0x100"
+    },
+    "pc": 3854,
+    "depth": 2,
+    "result": "",
+    "gas": 147618362,
+    "gasCost": 5,
+    "code": "_devWallet",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x30fc4f8338f9637dbec98e217bba783529d7a295",
+      "b": "0x5141b82f5ffda4c6fe1e372978f1c5427640a190"
+    },
+    "pc": 3856,
+    "depth": 2,
+    "result": false,
+    "gas": 147618354,
+    "gasCost": 3,
+    "code": "to != _devWallet",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 3857,
+    "depth": 2,
+    "result": true,
+    "gas": 147618351,
+    "gasCost": 3,
+    "code": "to != _devWallet",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x1"
+    },
+    "pc": 3859,
+    "depth": 2,
+    "result": false,
+    "gas": 147618347,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x1182",
+      "condition": "0x0"
+    },
+    "pc": 3863,
+    "depth": 2,
+    "result": "",
+    "gas": 147618341,
+    "gasCost": 10,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0xd"
+    },
+    "pc": 3866,
+    "depth": 2,
+    "result": "",
+    "gas": 147618328,
+    "gasCost": 2100,
+    "code": "enableTransfers",
+    "context_code": ""
+  },
+  {
+    "op": "DIV",
+    "args": {
+      "a": "0x1010001055fb841cce69000fbaff2691ad39fa6e23826a1",
+      "b": "0x10000000000000000000000000000000000000000000000"
+    },
+    "pc": 3873,
+    "depth": 2,
+    "result": "",
+    "gas": 147616216,
+    "gasCost": 5,
+    "code": "enableTransfers",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0xf69",
+      "condition": "0x1"
+    },
+    "pc": 3880,
+    "depth": 2,
+    "result": "",
+    "gas": 147616202,
+    "gasCost": 10,
+    "code": "require(enableTransfers, \"Transfers are disabled\")",
+    "context_code": ""
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0x6"
+    },
+    "pc": 3956,
+    "depth": 2,
+    "result": "",
+    "gas": 147616179,
+    "gasCost": 2100,
+    "code": "_buyTax",
+    "context_code": ""
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x13a5"
+    },
+    "pc": 3970,
+    "depth": 2,
+    "result": "",
+    "gas": 147614058,
+    "gasCost": 8,
+    "code": "amount.mul(_buyTax)",
+    "context_code": ""
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x0",
+      "b": "0xc6cec41267a9be"
+    },
+    "pc": 5033,
+    "depth": 2,
+    "result": "",
+    "gas": 147614042,
+    "gasCost": 3,
+    "code": "a == 0",
+    "context_code": "        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x13b4",
+      "condition": "0xffffffffffffffffffffffffffffffffffffffffffffffffff39313bed985642"
+    },
+    "pc": 5037,
+    "depth": 2,
+    "result": "",
+    "gas": 147614036,
+    "gasCost": 10,
+    "code": "if (a == 0) {\n            return 0;\n        }",
+    "context_code": "        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }\n"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x18f5"
+    },
+    "pc": 5054,
+    "depth": 2,
+    "result": "",
+    "gas": 147614011,
+    "gasCost": 8,
+    "code": "a * b",
+    "context_code": "\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }\n\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {"
+  },
+  {
+    "op": "MUL",
+    "args": {
+      "a": "0x0",
+      "b": "0xc6cec41267a9be"
+    },
+    "pc": 6392,
+    "depth": 2,
+    "result": "",
+    "gas": 147613996,
+    "gasCost": 5,
+    "code": "mul(x, y)",
+    "context_code": "    {\n        power := checked_exp_unsigned(base, and(exponent, 0xff))\n    }\n    function checked_mul_t_uint256(x, y) -> product\n    {\n        product := mul(x, y)\n        if iszero(or(iszero(x), eq(y, div(product, x)))) { panic_error_0x11() }\n    }\n    function abi_encode_tuple_t_stringliteral_9924ebdf1add33d25d4ef888e16131f0a5687b0580a36c21b5c301a6c462effe__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0xc6cec41267a9be"
+    },
+    "pc": 6394,
+    "depth": 2,
+    "result": false,
+    "gas": 147613988,
+    "gasCost": 3,
+    "code": "iszero(x)",
+    "context_code": "        power := checked_exp_unsigned(base, and(exponent, 0xff))\n    }\n    function checked_mul_t_uint256(x, y) -> product\n    {\n        product := mul(x, y)\n        if iszero(or(iszero(x), eq(y, div(product, x)))) { panic_error_0x11() }\n    }\n    function abi_encode_tuple_t_stringliteral_9924ebdf1add33d25d4ef888e16131f0a5687b0580a36c21b5c301a6c462effe__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)"
+  },
+  {
+    "op": "DIV",
+    "args": {
+      "a": "0x0",
+      "b": "0xc6cec41267a9be"
+    },
+    "pc": 6397,
+    "depth": 2,
+    "result": "",
+    "gas": 147613979,
+    "gasCost": 5,
+    "code": "div(product, x)",
+    "context_code": "        power := checked_exp_unsigned(base, and(exponent, 0xff))\n    }\n    function checked_mul_t_uint256(x, y) -> product\n    {\n        product := mul(x, y)\n        if iszero(or(iszero(x), eq(y, div(product, x)))) { panic_error_0x11() }\n    }\n    function abi_encode_tuple_t_stringliteral_9924ebdf1add33d25d4ef888e16131f0a5687b0580a36c21b5c301a6c462effe__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)"
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x0",
+      "b": "0x0"
+    },
+    "pc": 6399,
+    "depth": 2,
+    "result": true,
+    "gas": 147613971,
+    "gasCost": 3,
+    "code": "eq(y, div(product, x))",
+    "context_code": "        power := checked_exp_unsigned(base, and(exponent, 0xff))\n    }\n    function checked_mul_t_uint256(x, y) -> product\n    {\n        product := mul(x, y)\n        if iszero(or(iszero(x), eq(y, div(product, x)))) { panic_error_0x11() }\n    }\n    function abi_encode_tuple_t_stringliteral_9924ebdf1add33d25d4ef888e16131f0a5687b0580a36c21b5c301a6c462effe__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x431",
+      "condition": "0x1"
+    },
+    "pc": 6404,
+    "depth": 2,
+    "result": "",
+    "gas": 147613962,
+    "gasCost": 10,
+    "code": "if iszero(or(iszero(x), eq(y, div(product, x)))) { panic_error_0x11() }",
+    "context_code": "        power := checked_exp_unsigned(base, and(exponent, 0xff))\n    }\n    function checked_mul_t_uint256(x, y) -> product\n    {\n        product := mul(x, y)\n        if iszero(or(iszero(x), eq(y, div(product, x)))) { panic_error_0x11() }\n    }\n    function abi_encode_tuple_t_stringliteral_9924ebdf1add33d25d4ef888e16131f0a5687b0580a36c21b5c301a6c462effe__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x13bf"
+    },
+    "pc": 1078,
+    "depth": 2,
+    "result": "",
+    "gas": 147613941,
+    "gasCost": 8,
+    "code": "function approve(address spender, uint256 amount) public override returns (bool) {\n        _approve(_msgSender(), spender, amount);\n        return true;\n    }",
+    "context_code": ""
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x19e3"
+    },
+    "pc": 5067,
+    "depth": 2,
+    "result": "",
+    "gas": 147613912,
+    "gasCost": 8,
+    "code": "c / a",
+    "context_code": "    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }\n\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\n        return div(a, b, \"SafeMath: division by zero\");"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x19fd",
+      "condition": "0xc6cec41267a9be"
+    },
+    "pc": 6633,
+    "depth": 2,
+    "result": "",
+    "gas": 147613895,
+    "gasCost": 10,
+    "code": "if iszero(y)\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x12)\n            revert(0, 0x24)\n        }",
+    "context_code": "        diff := sub(x, y)\n        if gt(diff, x) { panic_error_0x11() }\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x12)\n            revert(0, 0x24)\n        }\n        r := div(x, y)\n    }\n    function abi_encode_tuple_t_stringliteral_9113bb53c2876a3805b2c9242029423fc540a728243ce887ab24c82cf119fba3__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)"
+  },
+  {
+    "op": "DIV",
+    "args": {
+      "a": "0x0",
+      "b": "0xc6cec41267a9be"
+    },
+    "pc": 6655,
+    "depth": 2,
+    "result": "",
+    "gas": 147613882,
+    "gasCost": 5,
+    "code": "div(x, y)",
+    "context_code": "        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x12)\n            revert(0, 0x24)\n        }\n        r := div(x, y)\n    }\n    function abi_encode_tuple_t_stringliteral_9113bb53c2876a3805b2c9242029423fc540a728243ce887ab24c82cf119fba3__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 33)"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x13cc"
+    },
+    "pc": 6657,
+    "depth": 2,
+    "result": "",
+    "gas": 147613874,
+    "gasCost": 8,
+    "code": "function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x12)\n            revert(0, 0x24)\n        }\n        r := div(x, y)\n    }",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x0",
+      "b": "0x0"
+    },
+    "pc": 5069,
+    "depth": 2,
+    "result": true,
+    "gas": 147613865,
+    "gasCost": 3,
+    "code": "c / a == b",
+    "context_code": "    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }\n\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\n        return div(a, b, \"SafeMath: division by zero\");"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x1423",
+      "condition": "0x1"
+    },
+    "pc": 5073,
+    "depth": 2,
+    "result": "",
+    "gas": 147613859,
+    "gasCost": 10,
+    "code": "require(c / a == b, \"SafeMath: multiplication overflow\")",
+    "context_code": "    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }\n\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\n        return div(a, b, \"SafeMath: division by zero\");"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0xf83"
+    },
+    "pc": 5161,
+    "depth": 2,
+    "result": "",
+    "gas": 147613836,
+    "gasCost": 8,
+    "code": "function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }",
+    "context_code": "        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }\n\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\n        return div(a, b, \"SafeMath: division by zero\");\n    }\n"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x142a"
+    },
+    "pc": 3976,
+    "depth": 2,
+    "result": "",
+    "gas": 147613821,
+    "gasCost": 8,
+    "code": "amount.mul(_buyTax).div(100)",
+    "context_code": ""
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x40",
+      "b": "0x80"
+    },
+    "pc": 5175,
+    "depth": 2,
+    "result": "",
+    "gas": 147613789,
+    "gasCost": 3,
+    "code": "div(a, b, \"SafeMath: division by zero\")",
+    "context_code": "        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }\n\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\n        return div(a, b, \"SafeMath: division by zero\");\n    }\n\n    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b > 0, errorMessage);\n        uint256 c = a / b;"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x20",
+      "b": "0x80"
+    },
+    "pc": 5186,
+    "depth": 2,
+    "result": "",
+    "gas": 147613759,
+    "gasCost": 3,
+    "code": "div(a, b, \"SafeMath: division by zero\")",
+    "context_code": "        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }\n\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\n        return div(a, b, \"SafeMath: division by zero\");\n    }\n\n    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b > 0, errorMessage);\n        uint256 c = a / b;"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x168e"
+    },
+    "pc": 5226,
+    "depth": 2,
+    "result": "",
+    "gas": 147613739,
+    "gasCost": 8,
+    "code": "div(a, b, \"SafeMath: division by zero\")",
+    "context_code": "        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }\n\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\n        return div(a, b, \"SafeMath: division by zero\");\n    }\n\n    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b > 0, errorMessage);\n        uint256 c = a / b;"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x16ae",
+      "condition": "0x64"
+    },
+    "pc": 5781,
+    "depth": 2,
+    "result": "",
+    "gas": 147613719,
+    "gasCost": 10,
+    "code": "require(b > 0, errorMessage)",
+    "context_code": "    function div(uint256 a, uint256 b) internal pure returns (uint256) {\n        return div(a, b, \"SafeMath: division by zero\");\n    }\n\n    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b > 0, errorMessage);\n        uint256 c = a / b;\n        return c;\n    }\n\n}"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x19e3"
+    },
+    "pc": 5817,
+    "depth": 2,
+    "result": "",
+    "gas": 147613692,
+    "gasCost": 8,
+    "code": "a / b",
+    "context_code": "        return div(a, b, \"SafeMath: division by zero\");\n    }\n\n    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b > 0, errorMessage);\n        uint256 c = a / b;\n        return c;\n    }\n\n}\n"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x19fd",
+      "condition": "0x64"
+    },
+    "pc": 6633,
+    "depth": 2,
+    "result": "",
+    "gas": 147613675,
+    "gasCost": 10,
+    "code": "if iszero(y)\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x12)\n            revert(0, 0x24)\n        }",
+    "context_code": "        diff := sub(x, y)\n        if gt(diff, x) { panic_error_0x11() }\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x12)\n            revert(0, 0x24)\n        }\n        r := div(x, y)\n    }\n    function abi_encode_tuple_t_stringliteral_9113bb53c2876a3805b2c9242029423fc540a728243ce887ab24c82cf119fba3__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)"
+  },
+  {
+    "op": "DIV",
+    "args": {
+      "a": "0x0",
+      "b": "0x64"
+    },
+    "pc": 6655,
+    "depth": 2,
+    "result": "",
+    "gas": 147613662,
+    "gasCost": 5,
+    "code": "div(x, y)",
+    "context_code": "        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x12)\n            revert(0, 0x24)\n        }\n        r := div(x, y)\n    }\n    function abi_encode_tuple_t_stringliteral_9113bb53c2876a3805b2c9242029423fc540a728243ce887ab24c82cf119fba3__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 33)"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1365"
+    },
+    "pc": 6657,
+    "depth": 2,
+    "result": "",
+    "gas": 147613654,
+    "gasCost": 8,
+    "code": "function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x12)\n            revert(0, 0x24)\n        }\n        r := div(x, y)\n    }",
+    "context_code": ""
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1423"
+    },
+    "pc": 4973,
+    "depth": 2,
+    "result": "",
+    "gas": 147613629,
+    "gasCost": 8,
+    "code": "function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }",
+    "context_code": "\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0xf89"
+    },
+    "pc": 5161,
+    "depth": 2,
+    "result": "",
+    "gas": 147613608,
+    "gasCost": 8,
+    "code": "function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }",
+    "context_code": "        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }\n\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\n        return div(a, b, \"SafeMath: division by zero\");\n    }\n"
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0xd"
+    },
+    "pc": 3980,
+    "depth": 2,
+    "result": "",
+    "gas": 147613596,
+    "gasCost": 100,
+    "code": "uniswapV2Pair",
+    "context_code": ""
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 3991,
+    "depth": 2,
+    "result": "",
+    "gas": 147613476,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x55fb841cce69000fbaff2691ad39fa6e23826a1",
+      "b": "0x4ac3dc4f8986d77d3d589daa074f040b701d752a"
+    },
+    "pc": 3997,
+    "depth": 2,
+    "result": false,
+    "gas": 147613458,
+    "gasCost": 3,
+    "code": "from == uniswapV2Pair",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 3999,
+    "depth": 2,
+    "result": true,
+    "gas": 147613452,
+    "gasCost": 3,
+    "code": "from == uniswapV2Pair && to != address(uniswapV2Router)",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0xfb7",
+      "condition": "0x1"
+    },
+    "pc": 4003,
+    "depth": 2,
+    "result": "",
+    "gas": 147613446,
+    "gasCost": 10,
+    "code": "from == uniswapV2Pair && to != address(uniswapV2Router)",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 4025,
+    "depth": 2,
+    "result": true,
+    "gas": 147613432,
+    "gasCost": 3,
+    "code": "from == uniswapV2Pair && to != address(uniswapV2Router) && ! _isExcludedFromFee[to]",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0xfdb",
+      "condition": "0x1"
+    },
+    "pc": 4029,
+    "depth": 2,
+    "result": "",
+    "gas": 147613426,
+    "gasCost": 10,
+    "code": "from == uniswapV2Pair && to != address(uniswapV2Router) && ! _isExcludedFromFee[to]",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 4060,
+    "depth": 2,
+    "result": true,
+    "gas": 147613415,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x10ac",
+      "condition": "0x1"
+    },
+    "pc": 4064,
+    "depth": 2,
+    "result": "",
+    "gas": 147613409,
+    "gasCost": 10,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0xd"
+    },
+    "pc": 4271,
+    "depth": 2,
+    "result": "",
+    "gas": 147613395,
+    "gasCost": 100,
+    "code": "uniswapV2Pair",
+    "context_code": ""
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 4279,
+    "depth": 2,
+    "result": "",
+    "gas": 147613283,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x55fb841cce69000fbaff2691ad39fa6e23826a1",
+      "b": "0x5141b82f5ffda4c6fe1e372978f1c5427640a190"
+    },
+    "pc": 4285,
+    "depth": 2,
+    "result": false,
+    "gas": 147613265,
+    "gasCost": 3,
+    "code": "to == uniswapV2Pair",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 4287,
+    "depth": 2,
+    "result": true,
+    "gas": 147613259,
+    "gasCost": 3,
+    "code": "to == uniswapV2Pair && from!= address(this)",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x10d2",
+      "condition": "0x1"
+    },
+    "pc": 4291,
+    "depth": 2,
+    "result": "",
+    "gas": 147613253,
+    "gasCost": 10,
+    "code": "to == uniswapV2Pair && from!= address(this)",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 4307,
+    "depth": 2,
+    "result": true,
+    "gas": 147613242,
+    "gasCost": 3,
+    "code": "if(to == uniswapV2Pair && from!= address(this) ){\n                taxAmount = amount.mul(_sellTax).div(100);\n            }",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x10f4",
+      "condition": "0x1"
+    },
+    "pc": 4311,
+    "depth": 2,
+    "result": "",
+    "gas": 147613236,
+    "gasCost": 10,
+    "code": "if(to == uniswapV2Pair && from!= address(this) ){\n                taxAmount = amount.mul(_sellTax).div(100);\n            }",
+    "context_code": ""
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0x15dc9e026576adc298926161af305f64d36f46365fb08364f416e5283e6c13cb"
+    },
+    "pc": 4355,
+    "depth": 2,
+    "result": "",
+    "gas": 147613155,
+    "gasCost": 2100,
+    "code": "_balances[account]",
+    "context_code": "    function totalSupply() public pure override returns (uint256) {\n        return _tTotal;\n    }\n\n    function balanceOf(address account) public view override returns (uint256) {\n        return _balances[account];\n    }\n\n    function transfer(address recipient, uint256 amount) public override returns (bool) {\n        _transfer(_msgSender(), recipient, amount);\n        return true;"
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0xd"
+    },
+    "pc": 4358,
+    "depth": 2,
+    "result": "",
+    "gas": 147611052,
+    "gasCost": 100,
+    "code": "inSwap",
+    "context_code": ""
+  },
+  {
+    "op": "DIV",
+    "args": {
+      "a": "0x1010001055fb841cce69000fbaff2691ad39fa6e23826a1",
+      "b": "0x1000000000000000000000000000000000000000000"
+    },
+    "pc": 4365,
+    "depth": 2,
+    "result": "",
+    "gas": 147610940,
+    "gasCost": 5,
+    "code": "inSwap",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 4369,
+    "depth": 2,
+    "result": true,
+    "gas": 147610929,
+    "gasCost": 3,
+    "code": "!inSwap",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x1"
+    },
+    "pc": 4371,
+    "depth": 2,
+    "result": false,
+    "gas": 147610923,
+    "gasCost": 3,
+    "code": "!inSwap && to   == uniswapV2Pair",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x112a",
+      "condition": "0x0"
+    },
+    "pc": 4375,
+    "depth": 2,
+    "result": "",
+    "gas": 147610917,
+    "gasCost": 10,
+    "code": "!inSwap && to   == uniswapV2Pair",
+    "context_code": ""
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0xd"
+    },
+    "pc": 4379,
+    "depth": 2,
+    "result": "",
+    "gas": 147610902,
+    "gasCost": 100,
+    "code": "uniswapV2Pair",
+    "context_code": ""
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 4387,
+    "depth": 2,
+    "result": "",
+    "gas": 147610790,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x55fb841cce69000fbaff2691ad39fa6e23826a1",
+      "b": "0x5141b82f5ffda4c6fe1e372978f1c5427640a190"
+    },
+    "pc": 4393,
+    "depth": 2,
+    "result": false,
+    "gas": 147610772,
+    "gasCost": 3,
+    "code": "to   == uniswapV2Pair",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 4396,
+    "depth": 2,
+    "result": true,
+    "gas": 147610765,
+    "gasCost": 3,
+    "code": "!inSwap && to   == uniswapV2Pair && swapEnabled",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x113f",
+      "condition": "0x1"
+    },
+    "pc": 4400,
+    "depth": 2,
+    "result": "",
+    "gas": 147610759,
+    "gasCost": 10,
+    "code": "!inSwap && to   == uniswapV2Pair && swapEnabled",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 4417,
+    "depth": 2,
+    "result": true,
+    "gas": 147610745,
+    "gasCost": 3,
+    "code": "!inSwap && to   == uniswapV2Pair && swapEnabled && contractTokenBalance>_taxSwapThreshold",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x114c",
+      "condition": "0x1"
+    },
+    "pc": 4421,
+    "depth": 2,
+    "result": "",
+    "gas": 147610739,
+    "gasCost": 10,
+    "code": "!inSwap && to   == uniswapV2Pair && swapEnabled && contractTokenBalance>_taxSwapThreshold",
+    "context_code": ""
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 4429,
+    "depth": 2,
+    "result": true,
+    "gas": 147610728,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x1180",
+      "condition": "0x1"
+    },
+    "pc": 4433,
+    "depth": 2,
+    "result": "",
+    "gas": 147610722,
+    "gasCost": 10,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 4490,
+    "depth": 2,
+    "result": "",
+    "gas": 147610696,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0x16f15e0da77779792d168d9042fe8d7e4054ea657f9a8ca39290b6d0d2c5b9cf"
+    },
+    "pc": 4506,
+    "depth": 2,
+    "result": "",
+    "gas": 147610619,
+    "gasCost": 2100,
+    "code": "_isExcludedFromFee[from]",
+    "context_code": "                    sendETHToFee(address(this).balance);\n                }\n            }\n        }\n\n        if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }\n\n        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x11bf",
+      "condition": "0x0"
+    },
+    "pc": 4514,
+    "depth": 2,
+    "result": "",
+    "gas": 147608507,
+    "gasCost": 10,
+    "code": "_isExcludedFromFee[from] || _isExcludedFromFee[to]",
+    "context_code": "                    sendETHToFee(address(this).balance);\n                }\n            }\n        }\n\n        if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }\n\n        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 4523,
+    "depth": 2,
+    "result": "",
+    "gas": 147608483,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0xaa97f9cb2e742b698cf6a3d3aafc16d74f2ed30deffa5ab5483d1e475d26c806"
+    },
+    "pc": 4539,
+    "depth": 2,
+    "result": "",
+    "gas": 147608406,
+    "gasCost": 2100,
+    "code": "_isExcludedFromFee[to]",
+    "context_code": "                    sendETHToFee(address(this).balance);\n                }\n            }\n        }\n\n        if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }\n\n        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x11f1",
+      "condition": "0x0"
+    },
+    "pc": 4548,
+    "depth": 2,
+    "result": "",
+    "gas": 147606293,
+    "gasCost": 10,
+    "code": "(_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)",
+    "context_code": "                    sendETHToFee(address(this).balance);\n                }\n            }\n        }\n\n        if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }\n\n        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);"
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0xd"
+    },
+    "pc": 4552,
+    "depth": 2,
+    "result": "",
+    "gas": 147606278,
+    "gasCost": 100,
+    "code": "uniswapV2Pair",
+    "context_code": "                    sendETHToFee(address(this).balance);\n                }\n            }\n        }\n\n        if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }\n\n        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 4560,
+    "depth": 2,
+    "result": "",
+    "gas": 147606166,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x55fb841cce69000fbaff2691ad39fa6e23826a1",
+      "b": "0x4ac3dc4f8986d77d3d589daa074f040b701d752a"
+    },
+    "pc": 4566,
+    "depth": 2,
+    "result": false,
+    "gas": 147606148,
+    "gasCost": 3,
+    "code": "from != uniswapV2Pair",
+    "context_code": "                    sendETHToFee(address(this).balance);\n                }\n            }\n        }\n\n        if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }\n\n        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 4568,
+    "depth": 2,
+    "result": true,
+    "gas": 147606142,
+    "gasCost": 3,
+    "code": "from != uniswapV2Pair",
+    "context_code": "                    sendETHToFee(address(this).balance);\n                }\n            }\n        }\n\n        if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }\n\n        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x11f1",
+      "condition": "0x0"
+    },
+    "pc": 4573,
+    "depth": 2,
+    "result": "",
+    "gas": 147606133,
+    "gasCost": 10,
+    "code": "from != uniswapV2Pair && to != uniswapV2Pair",
+    "context_code": "                    sendETHToFee(address(this).balance);\n                }\n            }\n        }\n\n        if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }\n\n        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);"
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0xd"
+    },
+    "pc": 4577,
+    "depth": 2,
+    "result": "",
+    "gas": 147606118,
+    "gasCost": 100,
+    "code": "uniswapV2Pair",
+    "context_code": "                    sendETHToFee(address(this).balance);\n                }\n            }\n        }\n\n        if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }\n\n        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 4585,
+    "depth": 2,
+    "result": "",
+    "gas": 147606006,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "EQ",
+    "args": {
+      "a": "0x55fb841cce69000fbaff2691ad39fa6e23826a1",
+      "b": "0x5141b82f5ffda4c6fe1e372978f1c5427640a190"
+    },
+    "pc": 4591,
+    "depth": 2,
+    "result": false,
+    "gas": 147605988,
+    "gasCost": 3,
+    "code": "to != uniswapV2Pair",
+    "context_code": "                    sendETHToFee(address(this).balance);\n                }\n            }\n        }\n\n        if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }\n\n        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 4592,
+    "depth": 2,
+    "result": true,
+    "gas": 147605985,
+    "gasCost": 3,
+    "code": "to != uniswapV2Pair",
+    "context_code": "                    sendETHToFee(address(this).balance);\n                }\n            }\n        }\n\n        if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }\n\n        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x1"
+    },
+    "pc": 4594,
+    "depth": 2,
+    "result": false,
+    "gas": 147605981,
+    "gasCost": 3,
+    "code": "if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }",
+    "context_code": "                    sendETHToFee(address(this).balance);\n                }\n            }\n        }\n\n        if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }\n\n        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);\n          emit Transfer(from, address(this),taxAmount);\n        }"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x11f9",
+      "condition": "0x0"
+    },
+    "pc": 4598,
+    "depth": 2,
+    "result": "",
+    "gas": 147605975,
+    "gasCost": 10,
+    "code": "if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }",
+    "context_code": "                    sendETHToFee(address(this).balance);\n                }\n            }\n        }\n\n        if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }\n\n        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);\n          emit Transfer(from, address(this),taxAmount);\n        }"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 4603,
+    "depth": 2,
+    "result": true,
+    "gas": 147605957,
+    "gasCost": 3,
+    "code": "taxAmount > 0",
+    "context_code": "\n        if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }\n\n        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);\n          emit Transfer(from, address(this),taxAmount);\n        }\n\n        _balances[from]=_balances[from].sub(amount);"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x1271",
+      "condition": "0x1"
+    },
+    "pc": 4607,
+    "depth": 2,
+    "result": "",
+    "gas": 147605951,
+    "gasCost": 10,
+    "code": "if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);\n          emit Transfer(from, address(this),taxAmount);\n        }",
+    "context_code": "\n        if ((_isExcludedFromFee[from] || _isExcludedFromFee[to]) || (from != uniswapV2Pair && to != uniswapV2Pair)) {\n            taxAmount = 0;\n        }\n\n        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);\n          emit Transfer(from, address(this),taxAmount);\n        }\n\n        _balances[from]=_balances[from].sub(amount);\n        _balances[to]=_balances[to].add(amount.sub(taxAmount));\n        emit Transfer(from, to, amount.sub(taxAmount));\n    }"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 4729,
+    "depth": 2,
+    "result": "",
+    "gas": 147605928,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0xb855f0098e22ba2dc3ca0e345f25a1f5634afc6afaf8f5dd1795e418c8089373"
+    },
+    "pc": 4745,
+    "depth": 2,
+    "result": "",
+    "gas": 147605851,
+    "gasCost": 2100,
+    "code": "_balances[from]",
+    "context_code": "        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);\n          emit Transfer(from, address(this),taxAmount);\n        }\n\n        _balances[from]=_balances[from].sub(amount);\n        _balances[to]=_balances[to].add(amount.sub(taxAmount));\n        emit Transfer(from, to, amount.sub(taxAmount));\n    }\n\n"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x164d"
+    },
+    "pc": 4754,
+    "depth": 2,
+    "result": "",
+    "gas": 147603739,
+    "gasCost": 8,
+    "code": "_balances[from].sub(amount)",
+    "context_code": "        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);\n          emit Transfer(from, address(this),taxAmount);\n        }\n\n        _balances[from]=_balances[from].sub(amount);\n        _balances[to]=_balances[to].add(amount.sub(taxAmount));\n        emit Transfer(from, to, amount.sub(taxAmount));\n    }\n\n"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x40",
+      "b": "0xc0"
+    },
+    "pc": 5722,
+    "depth": 2,
+    "result": "",
+    "gas": 147603707,
+    "gasCost": 3,
+    "code": "sub(a, b, \"SafeMath: subtraction overflow\")",
+    "context_code": "        require(c >= a, \"SafeMath: addition overflow\");\n        return c;\n    }\n\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x20",
+      "b": "0xc0"
+    },
+    "pc": 5733,
+    "depth": 2,
+    "result": "",
+    "gas": 147603680,
+    "gasCost": 3,
+    "code": "sub(a, b, \"SafeMath: subtraction overflow\")",
+    "context_code": "        require(c >= a, \"SafeMath: addition overflow\");\n        return c;\n    }\n\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1336"
+    },
+    "pc": 5773,
+    "depth": 2,
+    "result": "",
+    "gas": 147603660,
+    "gasCost": 8,
+    "code": "sub(a, b, \"SafeMath: subtraction overflow\")",
+    "context_code": "        require(c >= a, \"SafeMath: addition overflow\");\n        return c;\n    }\n\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;"
+  },
+  {
+    "op": "GT",
+    "args": {
+      "a": "0xc6cec41267a9be",
+      "b": "0x7c3d6bd2fe1f235"
+    },
+    "pc": 4923,
+    "depth": 2,
+    "result": false,
+    "gas": 147603640,
+    "gasCost": 3,
+    "code": "b <= a",
+    "context_code": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 4924,
+    "depth": 2,
+    "result": true,
+    "gas": 147603637,
+    "gasCost": 3,
+    "code": "b <= a",
+    "context_code": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x1359",
+      "condition": "0x1"
+    },
+    "pc": 4928,
+    "depth": 2,
+    "result": "",
+    "gas": 147603631,
+    "gasCost": 10,
+    "code": "require(b <= a, errorMessage)",
+    "context_code": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x19d0"
+    },
+    "pc": 4964,
+    "depth": 2,
+    "result": "",
+    "gas": 147603604,
+    "gasCost": 8,
+    "code": "a - b",
+    "context_code": "        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x7c3d6bd2fe1f235",
+      "b": "0xc6cec41267a9be"
+    },
+    "pc": 6611,
+    "depth": 2,
+    "result": "",
+    "gas": 147603589,
+    "gasCost": 3,
+    "code": "sub(x, y)",
+    "context_code": "        mstore(add(headStart, 64), \"Exceeds the maxWalletSize.\")\n        tail := add(headStart, 96)\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        diff := sub(x, y)\n        if gt(diff, x) { panic_error_0x11() }\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)"
+  },
+  {
+    "op": "GT",
+    "args": {
+      "a": "0x6fd07f91d7a4877",
+      "b": "0x7c3d6bd2fe1f235"
+    },
+    "pc": 6614,
+    "depth": 2,
+    "result": false,
+    "gas": 147603580,
+    "gasCost": 3,
+    "code": "gt(diff, x)",
+    "context_code": "        tail := add(headStart, 96)\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        diff := sub(x, y)\n        if gt(diff, x) { panic_error_0x11() }\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 6615,
+    "depth": 2,
+    "result": true,
+    "gas": 147603577,
+    "gasCost": 3,
+    "code": "if gt(diff, x) { panic_error_0x11() }",
+    "context_code": "        tail := add(headStart, 96)\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        diff := sub(x, y)\n        if gt(diff, x) { panic_error_0x11() }\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x431",
+      "condition": "0x1"
+    },
+    "pc": 6619,
+    "depth": 2,
+    "result": "",
+    "gas": 147603571,
+    "gasCost": 10,
+    "code": "if gt(diff, x) { panic_error_0x11() }",
+    "context_code": "        tail := add(headStart, 96)\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        diff := sub(x, y)\n        if gt(diff, x) { panic_error_0x11() }\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1365"
+    },
+    "pc": 1078,
+    "depth": 2,
+    "result": "",
+    "gas": 147603550,
+    "gasCost": 8,
+    "code": "function approve(address spender, uint256 amount) public override returns (bool) {\n        _approve(_msgSender(), spender, amount);\n        return true;\n    }",
+    "context_code": ""
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1423"
+    },
+    "pc": 4973,
+    "depth": 2,
+    "result": "",
+    "gas": 147603525,
+    "gasCost": 8,
+    "code": "function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }",
+    "context_code": "\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1293"
+    },
+    "pc": 5161,
+    "depth": 2,
+    "result": "",
+    "gas": 147603504,
+    "gasCost": 8,
+    "code": "function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }",
+    "context_code": "        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }\n\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\n        return div(a, b, \"SafeMath: division by zero\");\n    }\n"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 4763,
+    "depth": 2,
+    "result": "",
+    "gas": 147603483,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "SSTORE",
+    "args": {
+      "key": "0xb855f0098e22ba2dc3ca0e345f25a1f5634afc6afaf8f5dd1795e418c8089373",
+      "value": "0x6fd07f91d7a4877"
+    },
+    "pc": 4779,
+    "depth": 2,
+    "result": "",
+    "gas": 147603406,
+    "gasCost": 2900,
+    "code": "_balances[from]=_balances[from].sub(amount)",
+    "context_code": "        if(taxAmount > 0){\n          _balances[address(this)]=_balances[address(this)].add(taxAmount);\n          emit Transfer(from, address(this),taxAmount);\n        }\n\n        _balances[from]=_balances[from].sub(amount);\n        _balances[to]=_balances[to].add(amount.sub(taxAmount));\n        emit Transfer(from, to, amount.sub(taxAmount));\n    }\n\n"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x164d"
+    },
+    "pc": 4791,
+    "depth": 2,
+    "result": "",
+    "gas": 147600491,
+    "gasCost": 8,
+    "code": "amount.sub(taxAmount)",
+    "context_code": "          _balances[address(this)]=_balances[address(this)].add(taxAmount);\n          emit Transfer(from, address(this),taxAmount);\n        }\n\n        _balances[from]=_balances[from].sub(amount);\n        _balances[to]=_balances[to].add(amount.sub(taxAmount));\n        emit Transfer(from, to, amount.sub(taxAmount));\n    }\n\n\n    function min(uint256 a, uint256 b) private pure returns (uint256){"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x40",
+      "b": "0x100"
+    },
+    "pc": 5722,
+    "depth": 2,
+    "result": "",
+    "gas": 147600459,
+    "gasCost": 3,
+    "code": "sub(a, b, \"SafeMath: subtraction overflow\")",
+    "context_code": "        require(c >= a, \"SafeMath: addition overflow\");\n        return c;\n    }\n\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x20",
+      "b": "0x100"
+    },
+    "pc": 5733,
+    "depth": 2,
+    "result": "",
+    "gas": 147600432,
+    "gasCost": 3,
+    "code": "sub(a, b, \"SafeMath: subtraction overflow\")",
+    "context_code": "        require(c >= a, \"SafeMath: addition overflow\");\n        return c;\n    }\n\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1336"
+    },
+    "pc": 5773,
+    "depth": 2,
+    "result": "",
+    "gas": 147600412,
+    "gasCost": 8,
+    "code": "sub(a, b, \"SafeMath: subtraction overflow\")",
+    "context_code": "        require(c >= a, \"SafeMath: addition overflow\");\n        return c;\n    }\n\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;"
+  },
+  {
+    "op": "GT",
+    "args": {
+      "a": "0x0",
+      "b": "0xc6cec41267a9be"
+    },
+    "pc": 4923,
+    "depth": 2,
+    "result": false,
+    "gas": 147600392,
+    "gasCost": 3,
+    "code": "b <= a",
+    "context_code": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 4924,
+    "depth": 2,
+    "result": true,
+    "gas": 147600389,
+    "gasCost": 3,
+    "code": "b <= a",
+    "context_code": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x1359",
+      "condition": "0x1"
+    },
+    "pc": 4928,
+    "depth": 2,
+    "result": "",
+    "gas": 147600383,
+    "gasCost": 10,
+    "code": "require(b <= a, errorMessage)",
+    "context_code": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x19d0"
+    },
+    "pc": 4964,
+    "depth": 2,
+    "result": "",
+    "gas": 147600356,
+    "gasCost": 8,
+    "code": "a - b",
+    "context_code": "        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0xc6cec41267a9be",
+      "b": "0x0"
+    },
+    "pc": 6611,
+    "depth": 2,
+    "result": "",
+    "gas": 147600341,
+    "gasCost": 3,
+    "code": "sub(x, y)",
+    "context_code": "        mstore(add(headStart, 64), \"Exceeds the maxWalletSize.\")\n        tail := add(headStart, 96)\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        diff := sub(x, y)\n        if gt(diff, x) { panic_error_0x11() }\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)"
+  },
+  {
+    "op": "GT",
+    "args": {
+      "a": "0xc6cec41267a9be",
+      "b": "0xc6cec41267a9be"
+    },
+    "pc": 6614,
+    "depth": 2,
+    "result": false,
+    "gas": 147600332,
+    "gasCost": 3,
+    "code": "gt(diff, x)",
+    "context_code": "        tail := add(headStart, 96)\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        diff := sub(x, y)\n        if gt(diff, x) { panic_error_0x11() }\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 6615,
+    "depth": 2,
+    "result": true,
+    "gas": 147600329,
+    "gasCost": 3,
+    "code": "if gt(diff, x) { panic_error_0x11() }",
+    "context_code": "        tail := add(headStart, 96)\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        diff := sub(x, y)\n        if gt(diff, x) { panic_error_0x11() }\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x431",
+      "condition": "0x1"
+    },
+    "pc": 6619,
+    "depth": 2,
+    "result": "",
+    "gas": 147600323,
+    "gasCost": 10,
+    "code": "if gt(diff, x) { panic_error_0x11() }",
+    "context_code": "        tail := add(headStart, 96)\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        diff := sub(x, y)\n        if gt(diff, x) { panic_error_0x11() }\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1365"
+    },
+    "pc": 1078,
+    "depth": 2,
+    "result": "",
+    "gas": 147600302,
+    "gasCost": 8,
+    "code": "function approve(address spender, uint256 amount) public override returns (bool) {\n        _approve(_msgSender(), spender, amount);\n        return true;\n    }",
+    "context_code": ""
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1423"
+    },
+    "pc": 4973,
+    "depth": 2,
+    "result": "",
+    "gas": 147600277,
+    "gasCost": 8,
+    "code": "function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }",
+    "context_code": "\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x12b8"
+    },
+    "pc": 5161,
+    "depth": 2,
+    "result": "",
+    "gas": 147600256,
+    "gasCost": 8,
+    "code": "function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }",
+    "context_code": "        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }\n\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\n        return div(a, b, \"SafeMath: division by zero\");\n    }\n"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 4800,
+    "depth": 2,
+    "result": "",
+    "gas": 147600235,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0xf6f06488b07cf0117d7229da86168e7e85e98ddeeeda850b71b3462aa6832b78"
+    },
+    "pc": 4816,
+    "depth": 2,
+    "result": "",
+    "gas": 147600158,
+    "gasCost": 2100,
+    "code": "_balances[to]",
+    "context_code": "          _balances[address(this)]=_balances[address(this)].add(taxAmount);\n          emit Transfer(from, address(this),taxAmount);\n        }\n\n        _balances[from]=_balances[from].sub(amount);\n        _balances[to]=_balances[to].add(amount.sub(taxAmount));\n        emit Transfer(from, to, amount.sub(taxAmount));\n    }\n\n\n    function min(uint256 a, uint256 b) private pure returns (uint256){"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x15ef"
+    },
+    "pc": 4821,
+    "depth": 2,
+    "result": "",
+    "gas": 147598052,
+    "gasCost": 8,
+    "code": "_balances[to].add(amount.sub(taxAmount))",
+    "context_code": "          _balances[address(this)]=_balances[address(this)].add(taxAmount);\n          emit Transfer(from, address(this),taxAmount);\n        }\n\n        _balances[from]=_balances[from].sub(amount);\n        _balances[to]=_balances[to].add(amount.sub(taxAmount));\n        emit Transfer(from, to, amount.sub(taxAmount));\n    }\n\n\n    function min(uint256 a, uint256 b) private pure returns (uint256){"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x19bd"
+    },
+    "pc": 5626,
+    "depth": 2,
+    "result": "",
+    "gas": 147598026,
+    "gasCost": 8,
+    "code": "a + b",
+    "context_code": "    event Approval(address indexed owner, address indexed spender, uint256 value);\n}\n\nlibrary SafeMath {\n    function add(uint256 a, uint256 b) internal pure returns (uint256) {\n        uint256 c = a + b;\n        require(c >= a, \"SafeMath: addition overflow\");\n        return c;\n    }\n\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0xc6cec41267a9be",
+      "b": "0x1"
+    },
+    "pc": 6592,
+    "depth": 2,
+    "result": "",
+    "gas": 147598011,
+    "gasCost": 3,
+    "code": "add(x, y)",
+    "context_code": "        mstore(add(headStart, 64), \"Exceeds the _maxTxAmount.\")\n        tail := add(headStart, 96)\n    }\n    function checked_add_t_uint256(x, y) -> sum\n    {\n        sum := add(x, y)\n        if gt(x, sum) { panic_error_0x11() }\n    }\n    function abi_encode_tuple_t_stringliteral_c563e32fd325dd6083434381ad7ae564e6c211c512ec890aa906ea3486fb26c6__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)"
+  },
+  {
+    "op": "GT",
+    "args": {
+      "a": "0x1",
+      "b": "0xc6cec41267a9bf"
+    },
+    "pc": 6595,
+    "depth": 2,
+    "result": false,
+    "gas": 147598002,
+    "gasCost": 3,
+    "code": "gt(x, sum)",
+    "context_code": "        tail := add(headStart, 96)\n    }\n    function checked_add_t_uint256(x, y) -> sum\n    {\n        sum := add(x, y)\n        if gt(x, sum) { panic_error_0x11() }\n    }\n    function abi_encode_tuple_t_stringliteral_c563e32fd325dd6083434381ad7ae564e6c211c512ec890aa906ea3486fb26c6__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 26)"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 6596,
+    "depth": 2,
+    "result": true,
+    "gas": 147597999,
+    "gasCost": 3,
+    "code": "if gt(x, sum) { panic_error_0x11() }",
+    "context_code": "        tail := add(headStart, 96)\n    }\n    function checked_add_t_uint256(x, y) -> sum\n    {\n        sum := add(x, y)\n        if gt(x, sum) { panic_error_0x11() }\n    }\n    function abi_encode_tuple_t_stringliteral_c563e32fd325dd6083434381ad7ae564e6c211c512ec890aa906ea3486fb26c6__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 26)"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x431",
+      "condition": "0x1"
+    },
+    "pc": 6600,
+    "depth": 2,
+    "result": "",
+    "gas": 147597993,
+    "gasCost": 10,
+    "code": "if gt(x, sum) { panic_error_0x11() }",
+    "context_code": "        tail := add(headStart, 96)\n    }\n    function checked_add_t_uint256(x, y) -> sum\n    {\n        sum := add(x, y)\n        if gt(x, sum) { panic_error_0x11() }\n    }\n    function abi_encode_tuple_t_stringliteral_c563e32fd325dd6083434381ad7ae564e6c211c512ec890aa906ea3486fb26c6__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 26)"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x15fb"
+    },
+    "pc": 1078,
+    "depth": 2,
+    "result": "",
+    "gas": 147597972,
+    "gasCost": 8,
+    "code": "function approve(address spender, uint256 amount) public override returns (bool) {\n        _approve(_msgSender(), spender, amount);\n        return true;\n    }",
+    "context_code": ""
+  },
+  {
+    "op": "LT",
+    "args": {
+      "a": "0xc6cec41267a9bf",
+      "b": "0x1"
+    },
+    "pc": 5632,
+    "depth": 2,
+    "result": false,
+    "gas": 147597952,
+    "gasCost": 3,
+    "code": "c >= a",
+    "context_code": "}\n\nlibrary SafeMath {\n    function add(uint256 a, uint256 b) internal pure returns (uint256) {\n        uint256 c = a + b;\n        require(c >= a, \"SafeMath: addition overflow\");\n        return c;\n    }\n\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 5633,
+    "depth": 2,
+    "result": true,
+    "gas": 147597949,
+    "gasCost": 3,
+    "code": "c >= a",
+    "context_code": "}\n\nlibrary SafeMath {\n    function add(uint256 a, uint256 b) internal pure returns (uint256) {\n        uint256 c = a + b;\n        require(c >= a, \"SafeMath: addition overflow\");\n        return c;\n    }\n\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x1423",
+      "condition": "0x1"
+    },
+    "pc": 5637,
+    "depth": 2,
+    "result": "",
+    "gas": 147597943,
+    "gasCost": 10,
+    "code": "require(c >= a, \"SafeMath: addition overflow\")",
+    "context_code": "}\n\nlibrary SafeMath {\n    function add(uint256 a, uint256 b) internal pure returns (uint256) {\n        uint256 c = a + b;\n        require(c >= a, \"SafeMath: addition overflow\");\n        return c;\n    }\n\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x12d6"
+    },
+    "pc": 5161,
+    "depth": 2,
+    "result": "",
+    "gas": 147597920,
+    "gasCost": 8,
+    "code": "function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }",
+    "context_code": "        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }\n\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\n        return div(a, b, \"SafeMath: division by zero\");\n    }\n"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 4830,
+    "depth": 2,
+    "result": "",
+    "gas": 147597899,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "SSTORE",
+    "args": {
+      "key": "0xf6f06488b07cf0117d7229da86168e7e85e98ddeeeda850b71b3462aa6832b78",
+      "value": "0xc6cec41267a9bf"
+    },
+    "pc": 4850,
+    "depth": 2,
+    "result": "",
+    "gas": 147597810,
+    "gasCost": 2900,
+    "code": "_balances[to]=_balances[to].add(amount.sub(taxAmount))",
+    "context_code": "          _balances[address(this)]=_balances[address(this)].add(taxAmount);\n          emit Transfer(from, address(this),taxAmount);\n        }\n\n        _balances[from]=_balances[from].sub(amount);\n        _balances[to]=_balances[to].add(amount.sub(taxAmount));\n        emit Transfer(from, to, amount.sub(taxAmount));\n    }\n\n\n    function min(uint256 a, uint256 b) private pure returns (uint256){"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x164d"
+    },
+    "pc": 4894,
+    "depth": 2,
+    "result": "",
+    "gas": 147594889,
+    "gasCost": 8,
+    "code": "amount.sub(taxAmount)",
+    "context_code": "          emit Transfer(from, address(this),taxAmount);\n        }\n\n        _balances[from]=_balances[from].sub(amount);\n        _balances[to]=_balances[to].add(amount.sub(taxAmount));\n        emit Transfer(from, to, amount.sub(taxAmount));\n    }\n\n\n    function min(uint256 a, uint256 b) private pure returns (uint256){\n      return (a>b)?b:a;"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x40",
+      "b": "0x140"
+    },
+    "pc": 5722,
+    "depth": 2,
+    "result": "",
+    "gas": 147594857,
+    "gasCost": 3,
+    "code": "sub(a, b, \"SafeMath: subtraction overflow\")",
+    "context_code": "        require(c >= a, \"SafeMath: addition overflow\");\n        return c;\n    }\n\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x20",
+      "b": "0x140"
+    },
+    "pc": 5733,
+    "depth": 2,
+    "result": "",
+    "gas": 147594830,
+    "gasCost": 3,
+    "code": "sub(a, b, \"SafeMath: subtraction overflow\")",
+    "context_code": "        require(c >= a, \"SafeMath: addition overflow\");\n        return c;\n    }\n\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1336"
+    },
+    "pc": 5773,
+    "depth": 2,
+    "result": "",
+    "gas": 147594810,
+    "gasCost": 8,
+    "code": "sub(a, b, \"SafeMath: subtraction overflow\")",
+    "context_code": "        require(c >= a, \"SafeMath: addition overflow\");\n        return c;\n    }\n\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;"
+  },
+  {
+    "op": "GT",
+    "args": {
+      "a": "0x0",
+      "b": "0xc6cec41267a9be"
+    },
+    "pc": 4923,
+    "depth": 2,
+    "result": false,
+    "gas": 147594790,
+    "gasCost": 3,
+    "code": "b <= a",
+    "context_code": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 4924,
+    "depth": 2,
+    "result": true,
+    "gas": 147594787,
+    "gasCost": 3,
+    "code": "b <= a",
+    "context_code": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x1359",
+      "condition": "0x1"
+    },
+    "pc": 4928,
+    "depth": 2,
+    "result": "",
+    "gas": 147594781,
+    "gasCost": 10,
+    "code": "require(b <= a, errorMessage)",
+    "context_code": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x19d0"
+    },
+    "pc": 4964,
+    "depth": 2,
+    "result": "",
+    "gas": 147594754,
+    "gasCost": 8,
+    "code": "a - b",
+    "context_code": "        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0xc6cec41267a9be",
+      "b": "0x0"
+    },
+    "pc": 6611,
+    "depth": 2,
+    "result": "",
+    "gas": 147594739,
+    "gasCost": 3,
+    "code": "sub(x, y)",
+    "context_code": "        mstore(add(headStart, 64), \"Exceeds the maxWalletSize.\")\n        tail := add(headStart, 96)\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        diff := sub(x, y)\n        if gt(diff, x) { panic_error_0x11() }\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)"
+  },
+  {
+    "op": "GT",
+    "args": {
+      "a": "0xc6cec41267a9be",
+      "b": "0xc6cec41267a9be"
+    },
+    "pc": 6614,
+    "depth": 2,
+    "result": false,
+    "gas": 147594730,
+    "gasCost": 3,
+    "code": "gt(diff, x)",
+    "context_code": "        tail := add(headStart, 96)\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        diff := sub(x, y)\n        if gt(diff, x) { panic_error_0x11() }\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 6615,
+    "depth": 2,
+    "result": true,
+    "gas": 147594727,
+    "gasCost": 3,
+    "code": "if gt(diff, x) { panic_error_0x11() }",
+    "context_code": "        tail := add(headStart, 96)\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        diff := sub(x, y)\n        if gt(diff, x) { panic_error_0x11() }\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x431",
+      "condition": "0x1"
+    },
+    "pc": 6619,
+    "depth": 2,
+    "result": "",
+    "gas": 147594721,
+    "gasCost": 10,
+    "code": "if gt(diff, x) { panic_error_0x11() }",
+    "context_code": "        tail := add(headStart, 96)\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        diff := sub(x, y)\n        if gt(diff, x) { panic_error_0x11() }\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1365"
+    },
+    "pc": 1078,
+    "depth": 2,
+    "result": "",
+    "gas": 147594700,
+    "gasCost": 8,
+    "code": "function approve(address spender, uint256 amount) public override returns (bool) {\n        _approve(_msgSender(), spender, amount);\n        return true;\n    }",
+    "context_code": ""
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1423"
+    },
+    "pc": 4973,
+    "depth": 2,
+    "result": "",
+    "gas": 147594675,
+    "gasCost": 8,
+    "code": "function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }",
+    "context_code": "\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x131f"
+    },
+    "pc": 5161,
+    "depth": 2,
+    "result": "",
+    "gas": 147594654,
+    "gasCost": 8,
+    "code": "function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }",
+    "context_code": "        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (a == 0) {\n            return 0;\n        }\n        uint256 c = a * b;\n        require(c / a == b, \"SafeMath: multiplication overflow\");\n        return c;\n    }\n\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\n        return div(a, b, \"SafeMath: division by zero\");\n    }\n"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x20",
+      "b": "0x180"
+    },
+    "pc": 4904,
+    "depth": 2,
+    "result": "",
+    "gas": 147594624,
+    "gasCost": 3,
+    "code": "add(headStart, 32)",
+    "context_code": "        tail := add(headStart, 32)\n        mstore(headStart, iszero(iszero(value0)))\n    }\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_decode_tuple_t_addresst_addresst_uint256(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 96) { revert(0, 0) }"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x1a0",
+      "b": "0x180"
+    },
+    "pc": 4910,
+    "depth": 2,
+    "result": "",
+    "gas": 147594609,
+    "gasCost": 3,
+    "code": "Transfer(from, to, amount.sub(taxAmount))",
+    "context_code": "          emit Transfer(from, address(this),taxAmount);\n        }\n\n        _balances[from]=_balances[from].sub(amount);\n        _balances[to]=_balances[to].add(amount.sub(taxAmount));\n        emit Transfer(from, to, amount.sub(taxAmount));\n    }\n\n\n    function min(uint256 a, uint256 b) private pure returns (uint256){\n      return (a>b)?b:a;"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x466"
+    },
+    "pc": 4917,
+    "depth": 2,
+    "result": "",
+    "gas": 147592839,
+    "gasCost": 8,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x60",
+      "b": "0x180"
+    },
+    "pc": 1142,
+    "depth": 2,
+    "result": "",
+    "gas": 147592804,
+    "gasCost": 3,
+    "code": "_allowances[sender][_msgSender()].sub(amount, \"ERC20: transfer amount exceeds allowance\")",
+    "context_code": "        return true;\n    }\n\n    function transferFrom(address sender, address recipient, uint256 amount) public override returns (bool) {\n        _transfer(sender, recipient, amount);\n        _approve(sender, _msgSender(), _allowances[sender][_msgSender()].sub(amount, \"ERC20: transfer amount exceeds allowance\"));\n        return true;\n    }\n\n    function _approve(address owner, address spender, uint256 amount) private {\n        require(owner != address(0), \"ERC20: approve from the zero address\");"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x20",
+      "b": "0x180"
+    },
+    "pc": 1153,
+    "depth": 2,
+    "result": "",
+    "gas": 147592780,
+    "gasCost": 3,
+    "code": "_allowances[sender][_msgSender()].sub(amount, \"ERC20: transfer amount exceeds allowance\")",
+    "context_code": "        return true;\n    }\n\n    function transferFrom(address sender, address recipient, uint256 amount) public override returns (bool) {\n        _transfer(sender, recipient, amount);\n        _approve(sender, _msgSender(), _allowances[sender][_msgSender()].sub(amount, \"ERC20: transfer amount exceeds allowance\"));\n        return true;\n    }\n\n    function _approve(address owner, address spender, uint256 amount) private {\n        require(owner != address(0), \"ERC20: approve from the zero address\");"
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x10000000000000000000000000000000000000000",
+      "b": "0x1"
+    },
+    "pc": 1168,
+    "depth": 2,
+    "result": "",
+    "gas": 147592741,
+    "gasCost": 3,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "SLOAD",
+    "args": {
+      "key": "0xf146ff7a3530016c4c103265144219a3a284d05f3a717b90183f927d129324da"
+    },
+    "pc": 1195,
+    "depth": 2,
+    "result": "",
+    "gas": 147592593,
+    "gasCost": 2100,
+    "code": "_allowances[sender][_msgSender()]",
+    "context_code": "        return true;\n    }\n\n    function transferFrom(address sender, address recipient, uint256 amount) public override returns (bool) {\n        _transfer(sender, recipient, amount);\n        _approve(sender, _msgSender(), _allowances[sender][_msgSender()].sub(amount, \"ERC20: transfer amount exceeds allowance\"));\n        return true;\n    }\n\n    function _approve(address owner, address spender, uint256 amount) private {\n        require(owner != address(0), \"ERC20: approve from the zero address\");"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x1336"
+    },
+    "pc": 1201,
+    "depth": 2,
+    "result": "",
+    "gas": 147590484,
+    "gasCost": 8,
+    "code": "_allowances[sender][_msgSender()].sub(amount, \"ERC20: transfer amount exceeds allowance\")",
+    "context_code": "        return true;\n    }\n\n    function transferFrom(address sender, address recipient, uint256 amount) public override returns (bool) {\n        _transfer(sender, recipient, amount);\n        _approve(sender, _msgSender(), _allowances[sender][_msgSender()].sub(amount, \"ERC20: transfer amount exceeds allowance\"));\n        return true;\n    }\n\n    function _approve(address owner, address spender, uint256 amount) private {\n        require(owner != address(0), \"ERC20: approve from the zero address\");"
+  },
+  {
+    "op": "GT",
+    "args": {
+      "a": "0xc6cec41267a9be",
+      "b": "0x0"
+    },
+    "pc": 4923,
+    "depth": 2,
+    "result": true,
+    "gas": 147590464,
+    "gasCost": 3,
+    "code": "b <= a",
+    "context_code": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x1"
+    },
+    "pc": 4924,
+    "depth": 2,
+    "result": false,
+    "gas": 147590461,
+    "gasCost": 3,
+    "code": "b <= a",
+    "context_code": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x1359",
+      "condition": "0x0"
+    },
+    "pc": 4928,
+    "depth": 2,
+    "result": "",
+    "gas": 147590455,
+    "gasCost": 10,
+    "code": "require(b <= a, errorMessage)",
+    "context_code": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x4",
+      "b": "0x1e0"
+    },
+    "pc": 4943,
+    "depth": 2,
+    "result": "",
+    "gas": 147590418,
+    "gasCost": 3,
+    "code": "require(b <= a, errorMessage)",
+    "context_code": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x16ba"
+    },
+    "pc": 4952,
+    "depth": 2,
+    "result": "",
+    "gas": 147590403,
+    "gasCost": 8,
+    "code": "require(b <= a, errorMessage)",
+    "context_code": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        return sub(a, b, \"SafeMath: subtraction overflow\");\n    }\n\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\n        require(b <= a, errorMessage);\n        uint256 c = a - b;\n        return c;\n    }\n\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x1e4",
+      "b": "0x20"
+    },
+    "pc": 5830,
+    "depth": 2,
+    "result": "",
+    "gas": 147590362,
+    "gasCost": 3,
+    "code": "add(headStart, _1)",
+    "context_code": "    function abi_encode_tuple_t_string_memory_ptr__to_t_string_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        let _1 := 32\n        mstore(headStart, _1)\n        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }"
+  },
+  {
+    "op": "LT",
+    "args": {
+      "a": "0x0",
+      "b": "0x28"
+    },
+    "pc": 5836,
+    "depth": 2,
+    "result": true,
+    "gas": 147590344,
+    "gasCost": 3,
+    "code": "lt(i, length)",
+    "context_code": "        let _1 := 32\n        mstore(headStart, _1)\n        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x1"
+    },
+    "pc": 5837,
+    "depth": 2,
+    "result": false,
+    "gas": 147590341,
+    "gasCost": 3,
+    "code": "for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }",
+    "context_code": "        let _1 := 32\n        mstore(headStart, _1)\n        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x16e5",
+      "condition": "0x0"
+    },
+    "pc": 5841,
+    "depth": 2,
+    "result": "",
+    "gas": 147590335,
+    "gasCost": 10,
+    "code": "for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }",
+    "context_code": "        let _1 := 32\n        mstore(headStart, _1)\n        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x0",
+      "b": "0x180"
+    },
+    "pc": 5844,
+    "depth": 2,
+    "result": "",
+    "gas": 147590319,
+    "gasCost": 3,
+    "code": "add(value0, i)",
+    "context_code": "        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x20",
+      "b": "0x180"
+    },
+    "pc": 5846,
+    "depth": 2,
+    "result": "",
+    "gas": 147590313,
+    "gasCost": 3,
+    "code": "add(add(value0, i), _1)",
+    "context_code": "        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x0",
+      "b": "0x1e4"
+    },
+    "pc": 5850,
+    "depth": 2,
+    "result": "",
+    "gas": 147590301,
+    "gasCost": 3,
+    "code": "add(headStart, i)",
+    "context_code": "        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x40",
+      "b": "0x1e4"
+    },
+    "pc": 5853,
+    "depth": 2,
+    "result": "",
+    "gas": 147590295,
+    "gasCost": 3,
+    "code": "add(add(headStart, i), 64)",
+    "context_code": "        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x20",
+      "b": "0x0"
+    },
+    "pc": 5856,
+    "depth": 2,
+    "result": "",
+    "gas": 147590283,
+    "gasCost": 3,
+    "code": "add(i, _1)",
+    "context_code": "        let _1 := 32\n        mstore(headStart, _1)\n        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x16c9"
+    },
+    "pc": 5860,
+    "depth": 2,
+    "result": "",
+    "gas": 147590277,
+    "gasCost": 8,
+    "code": "for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }",
+    "context_code": "        let _1 := 32\n        mstore(headStart, _1)\n        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {"
+  },
+  {
+    "op": "LT",
+    "args": {
+      "a": "0x20",
+      "b": "0x28"
+    },
+    "pc": 5836,
+    "depth": 2,
+    "result": true,
+    "gas": 147590262,
+    "gasCost": 3,
+    "code": "lt(i, length)",
+    "context_code": "        let _1 := 32\n        mstore(headStart, _1)\n        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x1"
+    },
+    "pc": 5837,
+    "depth": 2,
+    "result": false,
+    "gas": 147590259,
+    "gasCost": 3,
+    "code": "for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }",
+    "context_code": "        let _1 := 32\n        mstore(headStart, _1)\n        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x16e5",
+      "condition": "0x0"
+    },
+    "pc": 5841,
+    "depth": 2,
+    "result": "",
+    "gas": 147590253,
+    "gasCost": 10,
+    "code": "for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }",
+    "context_code": "        let _1 := 32\n        mstore(headStart, _1)\n        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x20",
+      "b": "0x180"
+    },
+    "pc": 5844,
+    "depth": 2,
+    "result": "",
+    "gas": 147590237,
+    "gasCost": 3,
+    "code": "add(value0, i)",
+    "context_code": "        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x20",
+      "b": "0x1a0"
+    },
+    "pc": 5846,
+    "depth": 2,
+    "result": "",
+    "gas": 147590231,
+    "gasCost": 3,
+    "code": "add(add(value0, i), _1)",
+    "context_code": "        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x20",
+      "b": "0x1e4"
+    },
+    "pc": 5850,
+    "depth": 2,
+    "result": "",
+    "gas": 147590219,
+    "gasCost": 3,
+    "code": "add(headStart, i)",
+    "context_code": "        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x40",
+      "b": "0x204"
+    },
+    "pc": 5853,
+    "depth": 2,
+    "result": "",
+    "gas": 147590213,
+    "gasCost": 3,
+    "code": "add(add(headStart, i), 64)",
+    "context_code": "        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x20",
+      "b": "0x20"
+    },
+    "pc": 5856,
+    "depth": 2,
+    "result": "",
+    "gas": 147590201,
+    "gasCost": 3,
+    "code": "add(i, _1)",
+    "context_code": "        let _1 := 32\n        mstore(headStart, _1)\n        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x16c9"
+    },
+    "pc": 5860,
+    "depth": 2,
+    "result": "",
+    "gas": 147590195,
+    "gasCost": 8,
+    "code": "for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }",
+    "context_code": "        let _1 := 32\n        mstore(headStart, _1)\n        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {"
+  },
+  {
+    "op": "LT",
+    "args": {
+      "a": "0x40",
+      "b": "0x28"
+    },
+    "pc": 5836,
+    "depth": 2,
+    "result": false,
+    "gas": 147590180,
+    "gasCost": 3,
+    "code": "lt(i, length)",
+    "context_code": "        let _1 := 32\n        mstore(headStart, _1)\n        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)"
+  },
+  {
+    "op": "ISZERO",
+    "args": {
+      "a": "0x0"
+    },
+    "pc": 5837,
+    "depth": 2,
+    "result": true,
+    "gas": 147590177,
+    "gasCost": 3,
+    "code": "for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }",
+    "context_code": "        let _1 := 32\n        mstore(headStart, _1)\n        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {"
+  },
+  {
+    "op": "JUMPI",
+    "args": {
+      "counter": "0x16e5",
+      "condition": "0x1"
+    },
+    "pc": 5841,
+    "depth": 2,
+    "result": "",
+    "gas": 147590171,
+    "gasCost": 10,
+    "code": "for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }",
+    "context_code": "        let _1 := 32\n        mstore(headStart, _1)\n        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x1e4",
+      "b": "0x28"
+    },
+    "pc": 5868,
+    "depth": 2,
+    "result": "",
+    "gas": 147590147,
+    "gasCost": 3,
+    "code": "add(headStart, length)",
+    "context_code": "        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x20c",
+      "b": "0x40"
+    },
+    "pc": 5869,
+    "depth": 2,
+    "result": "",
+    "gas": 147590144,
+    "gasCost": 3,
+    "code": "add(add(headStart, length), 64)",
+    "context_code": "        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x28",
+      "b": "0x1f"
+    },
+    "pc": 5879,
+    "depth": 2,
+    "result": "",
+    "gas": 147590123,
+    "gasCost": 3,
+    "code": "add(length, 31)",
+    "context_code": "        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x1e4",
+      "b": "0x40"
+    },
+    "pc": 5882,
+    "depth": 2,
+    "result": "",
+    "gas": 147590114,
+    "gasCost": 3,
+    "code": "add(headStart, and(add(length, 31), not(31)))",
+    "context_code": "        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }"
+  },
+  {
+    "op": "ADD",
+    "args": {
+      "a": "0x224",
+      "b": "0x40"
+    },
+    "pc": 5883,
+    "depth": 2,
+    "result": "",
+    "gas": 147590111,
+    "gasCost": 3,
+    "code": "add(add(headStart, and(add(length, 31), not(31))), 64)",
+    "context_code": "        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        mstore(add(add(headStart, length), 64), 0)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function validator_revert_address(value)\n    {\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }"
+  },
+  {
+    "op": "JUMP",
+    "args": {
+      "destination": "0x53d"
+    },
+    "pc": 5892,
+    "depth": 2,
+    "result": "",
+    "gas": 147590089,
+    "gasCost": 8,
+    "code": "",
+    "context_code": ""
+  },
+  {
+    "op": "SUB",
+    "args": {
+      "a": "0x264",
+      "b": "0x1e0"
+    },
+    "pc": 1347,
+    "depth": 2,
+    "result": "",
+    "gas": 147590068,
+    "gasCost": 3,
+    "code": "require(_owner == _msgSender(), \"Ownable: caller is not the owner\")",
+    "context_code": "    function owner() public view returns (address) {\n        return _owner;\n    }\n\n    modifier onlyOwner() {\n        require(_owner == _msgSender(), \"Ownable: caller is not the owner\");\n        _;\n    }\n\n    function renounceOwnership() public virtual onlyOwner {\n        emit OwnershipTransferred(_owner, address(0));"
+  },
+  {
+    "op": "REVERT",
+    "args": {
+      "offset": "0x1e0",
+      "size": "0x84"
+    },
+    "pc": 1349,
+    "depth": 2,
+    "result": "",
+    "gas": 147590062,
+    "gasCost": 0,
+    "message_hex": "0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000002845524332303a207472616e7366657220616d6f756e74206578636565647320616c6c6f77616e6365000000000000000000000000000000000000000000000000",
+    "message": "",
+    "code": "require(_owner == _msgSender(), \"Ownable: caller is not the owner\")",
+    "context_code": "    function owner() public view returns (address) {\n        return _owner;\n    }\n\n    modifier onlyOwner() {\n        require(_owner == _msgSender(), \"Ownable: caller is not the owner\");\n        _;\n    }\n\n    function renounceOwnership() public virtual onlyOwner {\n        emit OwnershipTransferred(_owner, address(0));"
+  }
+]
