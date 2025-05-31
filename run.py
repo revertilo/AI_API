@@ -159,10 +159,10 @@ async def process_scripts(tx_hash):
     """Обрабатывает последовательное выполнение скриптов"""
     logger.info(f"Starting script processing for tx_hash: {tx_hash}")
     
-    # Stage 1: Collect traces
+    # Stage 1: Fetching transaction traces
     await broadcast({
         'type': 'stage',
-        'stage': 'Collect traces',
+        'stage': 'Fetching transaction traces',
         'timestamp': datetime.now().isoformat()
     })
     
@@ -172,10 +172,10 @@ async def process_scripts(tx_hash):
     # Add delay between stages
     await asyncio.sleep(2)
     
-    # Stage 2: Collect meta infos
+    # Stage 2: Fetching contract metadata
     await broadcast({
         'type': 'stage',
-        'stage': 'Collect meta infos',
+        'stage': 'Fetching contract metadata',
         'timestamp': datetime.now().isoformat()
     })
     
@@ -216,10 +216,10 @@ async def process_scripts(tx_hash):
     # Add delay between stages
     await asyncio.sleep(2)
     
-    # Stage 3: AI Analyzing
+    # Stage 3: Analyzing transaction with AI
     await broadcast({
         'type': 'stage',
-        'stage': 'AI Analyzing',
+        'stage': 'Analyzing transaction with AI',
         'timestamp': datetime.now().isoformat()
     })
     
