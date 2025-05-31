@@ -143,7 +143,7 @@ async def process_scripts(tx_hash):
         return
         
     # Add delay between stages
-    await asyncio.sleep(2)
+    await asyncio.sleep(1)
     
     # Stage 2: Cleaning trace
     await broadcast({
@@ -156,7 +156,7 @@ async def process_scripts(tx_hash):
         return
         
     # Add delay between stages
-    await asyncio.sleep(2)
+    await asyncio.sleep(1)
     
     # Stage 3: Fetching contract metadata
     await broadcast({
@@ -222,7 +222,7 @@ async def process_scripts(tx_hash):
         logger.error(f"Error collecting source map: {e}")
     
     # Add delay between stages
-    await asyncio.sleep(2)
+    await asyncio.sleep(1)
     
     # Stage 4: Analyzing transaction with AI
     await broadcast({
@@ -364,7 +364,7 @@ async def process_emulation(params):
         return
         
     # Add delay between stages
-    await asyncio.sleep(2)
+    await asyncio.sleep(1)
     
     # Stage 2: Cleaning trace
     await broadcast({
@@ -377,7 +377,7 @@ async def process_emulation(params):
         return
         
     # Add delay between stages
-    await asyncio.sleep(2)
+    await asyncio.sleep(1)
     
     # Stage 3: Fetching contract metadata
     await broadcast({
@@ -443,7 +443,7 @@ async def process_emulation(params):
         logger.error(f"Error collecting source map: {e}")
     
     # Add delay between stages
-    await asyncio.sleep(2)
+    await asyncio.sleep(1)
     
     # Stage 4: Analyzing transaction with AI
     await broadcast({
