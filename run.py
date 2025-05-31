@@ -169,6 +169,9 @@ async def process_scripts(tx_hash):
     if not await run_script('process_traces.py', tx_hash):
         return
     
+    # Add delay between stages
+    await asyncio.sleep(2)
+    
     # Stage 2: Collect meta infos
     await broadcast({
         'type': 'stage',
@@ -178,6 +181,9 @@ async def process_scripts(tx_hash):
     
     if not await run_script('clean_trace.py', tx_hash):
         return
+    
+    # Add delay between stages
+    await asyncio.sleep(2)
     
     # Stage 3: AI Analyzing
     await broadcast({
