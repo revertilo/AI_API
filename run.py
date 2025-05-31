@@ -200,13 +200,37 @@ async def process_scripts(tx_hash):
                 timeout=5
             )
             response.raise_for_status()
-            source_map = response.json().get('jsonSourceMap', [])
+            source_map_list = response.json().get('jsonSourceMap', [])
+            source_map = {
+                item['pc']: {
+                    'code': item.get('code', '')[:256] if len(item.get('code', '')) < 256 else '',
+                    'context_code': item.get('context_code', '')[:512] if len(item.get('context_code', '')) < 512 else ''
+                } for item in source_map_list
+            }
             
-            # Save source map
-            with open('source_map.json', 'w') as f:
-                json.dump(source_map, f, indent=2)
+            # Update trace with source code
+            revert_index = None
+            for i, op in enumerate(trace):
+                if op['op'] == 'REVERT':
+                    revert_index = i
+                    break
+                    
+            if revert_index is not None:
+                # Update only 10 operations before and after revert
+                start = max(0, revert_index - 10)
+                end = min(len(trace), revert_index + 10)
+                for i in range(start, end):
+                    op = trace[i]
+                    pc = op.get('pc')
+                    if pc is not None and pc in source_map:
+                        op['source_code'] = source_map[pc]['code']
+                        op['context_code'] = source_map[pc]['context_code']
+            
+            # Save updated trace
+            with open('cleaned_trace.json', 'w') as f:
+                json.dump(trace, f, indent=2)
                 
-            logger.info(f"Source map collected for contract: {contract_address}")
+            logger.info(f"Source map collected and trace updated for contract: {contract_address}")
     except Exception as e:
         logger.error(f"Error collecting source map: {e}")
     

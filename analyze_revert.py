@@ -38,20 +38,6 @@ def get_revert_info():
         with open('cleaned_trace.json', 'r') as f:
             trace = json.load(f)
             
-        # Load source map if available
-        try:
-            with open('source_map.json', 'r') as f:
-                source_map_list = json.load(f)
-                source_map = {
-                    item['pc']: {
-                        'code': item.get('code', '')[:256] if len(item.get('code', '')) < 256 else '',
-                        'context_code': item.get('context_code', '')[:512] if len(item.get('context_code', '')) < 512 else ''
-                    } for item in source_map_list
-                }
-                trace = update_trace_with_source_map(trace, source_map)
-        except FileNotFoundError:
-            print("No source map found, continuing without it")
-            
         # Находим последний REVERT
         revert_op = None
         for op in trace:
