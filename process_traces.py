@@ -198,38 +198,38 @@ def process_trace(tx_hash):
     
     tx = tx_data['result']
     
-    # Создаем запись о первичном вызове
-    initial_call = {
+    # Получаем трейс
+    trace_data = get_transaction_trace(tx_hash)
+    if not trace_data or 'result' not in trace_data:
+        print("Error: Could not get transaction trace")
+        return None
+        
+    # Обрабатываем трейс
+    struct_logs = trace_data['result']['structLogs']
+    results = process_struct_logs(struct_logs)
+    
+    # Добавляем первый CALL из транзакции в начало трейса
+    first_call = {
         'op': 'CALL',
         'args': {
-            'to': tx.get('to', ''),
-            'value': tx.get('value', '0x0'),
-            'input_data': tx.get('input', '0x')
+            'from': tx['from'],
+            'to': tx['to'],
+            'value': tx['value'],
+            'input_data': tx['input']
         },
-        'gas': tx.get('gas', ''),
-        'gasCost': '0x0'  # Для первичного вызова gasCost не применим
+        'pc': 0,
+        'depth': 0,
+        'gas': 0,
+        'gasCost': 0
     }
+    results.insert(0, first_call)
     
-    # Получаем трейс транзакции
-    trace_data = get_transaction_trace(tx_hash)
-    
-    if trace_data and 'result' in trace_data:
-        result = trace_data['result']
+    # Сохраняем результаты в cleaned_trace.json
+    with open('cleaned_trace.json', 'w') as f:
+        json.dump(results, f, indent=2)
         
-        # Проверяем наличие structLogs
-        if 'structLogs' in result:
-            results = process_struct_logs(result['structLogs'])
-            
-            # Добавляем первичный вызов в начало результатов
-            results.insert(0, initial_call)
-            
-            return results
-        else:
-            print("No structLogs found in trace")
-            return None
-    else:
-        print("No result found in trace")
-        return None
+    print(f"Trace saved to cleaned_trace.json")
+    return results
 
 def main():
     # Получаем хэш транзакции из аргументов командной строки
@@ -238,14 +238,14 @@ def main():
         sys.exit(1)
         
     tx_hash = sys.argv[1]
-    results = process_trace(tx_hash)
+    print(f"Processing transaction: {tx_hash}")
     
-    if results:
-        # Сохраняем результаты в файл
-        with open('result.json', 'w') as f:
-            json.dump(results, f, indent=2)
-    else:
+    results = process_trace(tx_hash)
+    if not results:
+        print("Error: Failed to process transaction")
         sys.exit(1)
+        
+    print("Success!")
 
 if __name__ == "__main__":
     main() 
