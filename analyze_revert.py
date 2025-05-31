@@ -158,6 +158,9 @@ Your analysis should include:
 3. If there's a revert message, decode and explain it
 4. Suggest potential fixes or improvements
 
+Don't ask questions and don't ask user to provide more information, just provide the analysis.
+Don't include trace statistics, just the analysis.
+
 Please format your response in a clear, structured way:
 1. Summary of the issue
 2. Detailed analysis of the trace
