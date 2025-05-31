@@ -77,8 +77,8 @@ async def run_script(script_name, tx_hash=None):
     })
     
     try:
-        # Если это process_traces.py и есть хэш транзакции, передаем его как аргумент
-        if script_name == 'process_traces.py' and tx_hash:
+        # Если есть хэш транзакции, передаем его как аргумент
+        if tx_hash:
             logger.info(f"Running {script_name} with tx_hash: {tx_hash}")
             process = await asyncio.create_subprocess_exec(
                 'python3', script_name, tx_hash,
@@ -176,7 +176,7 @@ async def process_scripts(tx_hash):
         'timestamp': datetime.now().isoformat()
     })
     
-    if not await run_script('clean_trace.py'):
+    if not await run_script('clean_trace.py', tx_hash):
         return
     
     # Stage 3: AI Analyzing
