@@ -11,66 +11,6 @@ load_dotenv()
 # Configure API key from environment variable
 genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
 
-# Cache for source maps
-source_map_cache = {}
-
-def fill_missing_pc(source_map):
-    """Заполняет пропущенные значения предыдущим code и context_code"""
-    if not source_map:
-        return source_map
-        
-    # Получаем все pc и сортируем их
-    pcs = sorted(source_map.keys())
-    if not pcs:
-        return source_map
-        
-    # Заполняем пропуски
-    result = {}
-    last_code = source_map[pcs[0]].get('code', '')
-    last_context = source_map[pcs[0]].get('context_code', '')
-    
-    for i in range(pcs[0], pcs[-1] + 1):
-        if i in source_map:
-            last_code = source_map[i].get('code', '')
-            last_context = source_map[i].get('context_code', '')
-        result[i] = {
-            'code': last_code,
-            'context_code': last_context
-        }
-        
-    return result
-
-def get_source_map(contract_address):
-    """Получает jsonSourceMap для контракта"""
-    # Check cache first
-    if contract_address in source_map_cache:
-        print(f"Using cached source map for {contract_address}")
-        return source_map_cache[contract_address]
-        
-    try:
-        print(f"Fetching source map for contract: {contract_address}")
-        response = requests.post(
-            'http://205.196.81.76:5000/verify',
-            headers={'Content-Type': 'application/json'},
-            json={'address': contract_address},
-            timeout=5  # Add timeout
-        )
-        response.raise_for_status()
-        # Преобразуем список словарей в словарь с ключами pc
-        source_map_list = response.json().get('jsonSourceMap', [])
-        source_map = {
-            item['pc']: {
-                'code': item.get('code', '')[:512] if len(item.get('code', '')) < 512 else '',  # Reduce size
-                'context_code': item.get('context_code', '')[:512] if len(item.get('context_code', '')) < 512 else ''  # Reduce size
-            } for item in source_map_list
-        }
-        # Cache the result
-        source_map_cache[contract_address] = source_map
-        return source_map
-    except Exception as e:
-        print(f"Error fetching source map: {e}")
-        return {}
-
 def update_trace_with_source_map(trace, source_map):
     """Обновляет trace данными из source_map по pc"""
     # Only update operations around the revert
@@ -98,25 +38,19 @@ def get_revert_info():
         with open('cleaned_trace.json', 'r') as f:
             trace = json.load(f)
             
-        # Находим первый CALL для получения адреса контракта
-        first_call = None
-        for op in trace:
-            if op['op'] in ['CALL', 'DELEGATECALL', 'STATICCALL']:
-                first_call = op
-                break
-                
-        if first_call:
-            # Получаем адрес контракта из первого вызова
-            contract_address = first_call['args']['to']
-            print(f"Fetching source map for contract: {contract_address}")
-            
-            # Получаем source map и обновляем trace
-            source_map = get_source_map(contract_address)
-            trace = update_trace_with_source_map(trace, source_map)
-            
-            # Сохраняем обновленный trace
-            with open('cleaned_trace.json', 'w') as f:
-                json.dump(trace, f, indent=2)
+        # Load source map if available
+        try:
+            with open('source_map.json', 'r') as f:
+                source_map_list = json.load(f)
+                source_map = {
+                    item['pc']: {
+                        'code': item.get('code', '')[:256] if len(item.get('code', '')) < 256 else '',
+                        'context_code': item.get('context_code', '')[:512] if len(item.get('context_code', '')) < 512 else ''
+                    } for item in source_map_list
+                }
+                trace = update_trace_with_source_map(trace, source_map)
+        except FileNotFoundError:
+            print("No source map found, continuing without it")
             
         # Находим последний REVERT
         revert_op = None

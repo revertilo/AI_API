@@ -179,6 +179,37 @@ async def process_scripts(tx_hash):
         'timestamp': datetime.now().isoformat()
     })
     
+    # Get contract address from cleaned_trace.json
+    try:
+        with open('cleaned_trace.json', 'r') as f:
+            trace = json.load(f)
+            
+        # Find first CALL to get contract address
+        contract_address = None
+        for op in trace:
+            if op['op'] in ['CALL', 'DELEGATECALL', 'STATICCALL']:
+                contract_address = op['args']['to']
+                break
+                
+        if contract_address:
+            # Get source map for the contract
+            response = requests.post(
+                'http://205.196.81.76:5000/verify',
+                headers={'Content-Type': 'application/json'},
+                json={'address': contract_address},
+                timeout=5
+            )
+            response.raise_for_status()
+            source_map = response.json().get('jsonSourceMap', [])
+            
+            # Save source map
+            with open('source_map.json', 'w') as f:
+                json.dump(source_map, f, indent=2)
+                
+            logger.info(f"Source map collected for contract: {contract_address}")
+    except Exception as e:
+        logger.error(f"Error collecting source map: {e}")
+    
     if not await run_script('clean_trace.py', tx_hash):
         return
     
