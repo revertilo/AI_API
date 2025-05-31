@@ -241,103 +241,11 @@ async def process_scripts(tx_hash):
         with open('revert_analysis.txt', 'r') as f:
             analysis = f.read()
         
-        # Format the analysis report in English
-        report = f"""Transaction Analysis Report
-=====================
-
-Transaction Hash: {tx_hash}
-Analysis Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-
-Trace Analysis:
---------------
-## Transaction Revert Analysis
-
-The EVM trace analysis has revealed the cause of the transaction revert.
-
-**1. Structural Analysis:**
-
-*   **Revert Point:** `REVERT` operation at depth 3, PC 8852.
-*   **Revert Depth:** 3
-*   **Call Sequence to Error:**
-    1.  `DELEGATECALL` to contract `0x34039100cc9584ae5d741d322e16d0d18cee8770` (depth 2, PC 5626).
-    2.  `CALL` to contract `0x98c23e9d8f34fefb1b7bd6a91b7ff122f4e16f5c` (depth 3, PC 2740).
-
-**2. Revert Context:**
-
-*   **Input Data of Last Call (CALL):**
-    *   `0x4efecaa5` - function signature (likely `scaledTotalSupply`).
-    *   Other data related to function parameters: token address `0x742d35cc6634c0532925a3b8d00b6ac015ba0a9c`, amount `0x2505237600`.
-*   **Gas Remaining:** 369743 (not insufficient, therefore not out of gas).
-*   **Error Message:** Absent, indicating a low-level error (e.g., `revert(0,0)`).
-*   **Stack Before Revert:** Not provided in traces.
-*   **PC at Revert:** 8852
-
-**3. Function Call Analysis:**
-
-*   Function `calculateInterestRates` is called on contract `0x34039100cc9584ae5d741d322e16d0d18cee8770`,
-    and during debt calculation, function `IVariableDebtToken.scaledTotalSupply()` is called at address `0x98c23e9d8f34fefb1b7bd6a91b7ff122f4e16f5c`.
-    During the return from `scaledTotalSupply`, function `balanceOf` of contract `0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48` is called, and it returns `revert`.
-
-**4. Common Cause Check:**
-
-*   **A. External Calls:**
-    *   Possible cause: `balanceOf()` failed, as the contract might not be initialized, the contract might not exist, or some error occurred during computation, for example, division by 0, and as a result, operation `revert(0, 0)` was triggered.
-
-**5. Detailed Operation Analysis:**
-
-*   Looking at the operations immediately preceding `REVERT`, we can identify the following moments:
-    *   Variable `vars.totalDebtInBaseCurrency` is being calculated.
-    *   In this process, function `balanceOf()` is called on ERC20 contract (`IERC20(currentReserve.variableDebtTokenAddress).balanceOf(params.user)`) to get the balance.
-    *   The obtained value (balance) is used in arithmetic division operation `/ vars.assetUnit`.
-    *   Before the `REVERT` operation itself, SLT (signed less than) check `if (currentReserve.configuration.getIsVirtualAccActive())` is performed.
-    *   Call to `_getUserDebtInBaseCurrency`
-
-**6. Protocol-Specific Checks:**
-
-*   The transaction is likely related to a lending protocol where user debt calculation occurs.
-
-**7. Specific Error Indicators:**
-
-*   Absence of error message indicates a low-level `revert`.
-*   The presence of external contract call `IERC20(currentReserve.variableDebtTokenAddress).balanceOf(params.user)` indicates a potential problem with this contract or call parameters.
-
-**8. Error Message Analysis:**
-
-*   No error message is present. This suggests that a `revert` occurred without explicit reason specification (likely inside the called `balanceOf` function).
-
-**9. Final Diagnosis:**
-
-1.  **WHAT went wrong:** A `revert` occurred during user debt calculation, most likely during the call to `balanceOf()` on the ERC20 contract.
-2.  **WHY this led to revert:**
-    *   Possible causes: `balanceOf()` failed, as the contract might not be initialized, the contract might not exist, or some error occurred during computation, for example, division by 0, and as a result, operation `revert(0, 0)` was triggered.
-3.  **HOW this could have been prevented:**
-    *   It is necessary to verify that the contract, whose address is used for `balanceOf()` call, actually exists and is properly initialized.
-    *   Check the parameters being passed.
-4.  **WHAT data or state was incorrect:** The ERC20 contract address might be invalid, or the contract might not have `balanceOf` implementation.
-    *   `vars.assetUnit` might be 0.
-
-**10. Remediation Recommendations:**
-
-1.  **Check ERC20 contract address:** Ensure that `currentReserve.variableDebtTokenAddress` contains a correct and valid ERC20 contract address.
-2.  **`balanceOf()` implementation:** Verify that the ERC20 contract being called in `balanceOf` has proper implementation and doesn't revert with correct parameters.
-3.  **Handle call error:** In case of call error, implement exception handling (try-catch) to prevent the entire transaction from reverting.
-4.  **Check for zero:** Add a check for 0 for variable `vars.assetUnit` before division.
-
-For more accurate analysis, please provide the source code and information about the contracts being used.
-
-Trace Statistics:
-----------------
-Total Operations: {len(cleaned_trace)}
-Cleaned Operations: {len(cleaned_trace)}
-
-Note: This analysis shows the execution path up to the first REVERT operation.
-"""
-        
         # Send results through WebSocket
         await broadcast({
             'type': 'complete',
             'message': 'Analysis completed',
-            'data': report
+            'data': analysis
         })
             
     except Exception as e:
@@ -462,36 +370,11 @@ async def process_emulation(params):
         with open('revert_analysis.txt', 'r') as f:
             analysis = f.read()
         
-        # Format the analysis report
-        report = f"""Transaction Emulation Report
-=====================
-
-Emulation Parameters:
--------------------
-From: {params['from']}
-To: {params['to']}
-Data: {params['data']}
-Value: {params.get('value', '0')}
-
-Analysis Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-
-Trace Analysis:
---------------
-{analysis}
-
-Trace Statistics:
-----------------
-Total Operations: {len(cleaned_trace)}
-Cleaned Operations: {len(cleaned_trace)}
-
-Note: This analysis shows the execution path up to the first REVERT operation.
-"""
-        
         # Send results through WebSocket
         await broadcast({
             'type': 'complete',
-            'message': 'Emulation completed',
-            'data': report
+            'message': 'Analysis completed',
+            'data': analysis
         })
             
     except Exception as e:

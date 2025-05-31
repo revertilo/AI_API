@@ -130,11 +130,11 @@ def analyze_with_ai(tx_hash, contract_address, function_signature, revert_info, 
     """
     try:
         # Подготавливаем данные
-        source_code = contract_info.get('source', '')
+        source_code = contract_info.get('sources', '')
         cleaned_trace = json.dumps(revert_info['trace'], indent=2)
         
         # Формируем промпт
-        prompt = f"""You are an AI assistant specialized in analyzing Ethereum transaction traces and debugging smart contract issues. Your task is to analyze the transaction trace and provide insights about what went wrong.
+        prompt = f"""You are an AI assistant specialized in analyzing Ethereum transaction traces and debugging smart contract issues. Your task is to analyze the transaction trace and provide insights about what went wrong. The result will be shown to the user in a web interface.
 
 Transaction Hash: {tx_hash}
 Contract Address: {contract_address}
@@ -164,7 +164,7 @@ Please format your response in a clear, structured way:
 3. Root cause
 4. Recommendations
 
-Focus on being precise and technical, but also explain concepts in a way that's understandable to developers with basic Ethereum knowledge.
+Focus on being precise and technical, but also explain concepts in a way that's understandable to developers with basic Ethereum knowledge. Note that PC (program counter) is the number of bytecode instruction in the contract.
 
 Trace Data:
 {cleaned_trace}"""
