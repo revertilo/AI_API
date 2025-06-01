@@ -63,7 +63,7 @@ def main():
             trace_data = json.load(f)
             
         # Очищаем трейс
-        print("Cleaning trace...")
+        print("Compiling sources...")
         cleaned_trace = clean_trace(trace_data)
         
         if not cleaned_trace:

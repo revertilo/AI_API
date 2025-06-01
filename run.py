@@ -148,7 +148,7 @@ async def process_scripts(tx_hash):
     # Stage 2: Cleaning trace
     await broadcast({
         'type': 'stage',
-        'stage': 'Cleaning trace',
+        'stage': 'Compiling sources',
         'timestamp': datetime.now().isoformat()
     })
     
@@ -277,7 +277,7 @@ async def process_emulation(params):
     # Stage 2: Cleaning trace
     await broadcast({
         'type': 'stage',
-        'stage': 'Cleaning trace',
+        'stage': 'Compiling sources',
         'timestamp': datetime.now().isoformat()
     })
     
