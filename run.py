@@ -183,7 +183,7 @@ async def process_scripts(tx_hash):
                 'http://205.196.81.76:5000/verify',
                 headers={'Content-Type': 'application/json'},
                 json={'address': contract_address},
-                timeout=5
+                timeout=10
             )
             response.raise_for_status()
             source_map_list = response.json().get('jsonSourceMap', [])
@@ -312,7 +312,7 @@ async def process_emulation(params):
                 'http://205.196.81.76:5000/verify',
                 headers={'Content-Type': 'application/json'},
                 json={'address': contract_address},
-                timeout=5
+                timeout=10
             )
             response.raise_for_status()
             source_map_list = response.json().get('jsonSourceMap', [])

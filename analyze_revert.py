@@ -104,7 +104,7 @@ def get_contract_info(contract_address):
             'http://205.196.81.76:5000/verify',
             headers={'Content-Type': 'application/json'},
             json={'address': contract_address},
-            timeout=5
+            timeout=10
         )
         
         if response.status_code == 200:
