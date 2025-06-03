@@ -34,7 +34,7 @@ def get_trace_call(params):
         
         # Отправляем запрос к ноде
         response = requests.post(
-            'https://mainnet.chainnodes.org/c4aa58b5-440a-4dfc-a98f-e1fcd64d17d9',
+            '',
             json=trace_params,
             headers={'Content-Type': 'application/json'},
             timeout=30
